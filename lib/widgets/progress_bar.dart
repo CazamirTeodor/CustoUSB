@@ -25,7 +25,7 @@ class _MyProgressBarState extends State<MyProgressBar> {
                 color: Colors.green,
                 width: double.infinity,
                 height: height,
-                duration: Duration(milliseconds: 200),
+                duration: Duration(seconds: 5),
                 child: FlatButton(
                   color: Colors.transparent,
                   onPressed: increaseProgressBar,
@@ -93,7 +93,7 @@ class _MyProgressBarState extends State<MyProgressBar> {
   void increaseProgressBar() {
     if (height < 600) {
       setState(() {
-        height += 20;
+        height += 600;
       });
       return;
     }

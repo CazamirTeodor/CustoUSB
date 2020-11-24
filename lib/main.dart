@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './sections/drive_section.dart';
 import './sections/specs_section.dart';
+import './sections/ldap_section.dart';
 import './models/configuration.dart';
 import './widgets/progress_bar.dart';
 
@@ -55,7 +56,7 @@ class ConfigPage extends StatelessWidget {
         Divider(thickness: 0.5, color: Colors.black),
         // ToolsSection(toolsFunction: config.inputBinaries),
         Divider(thickness: 0.5, color: Colors.black),
-        // LDAPSection(ldapFunction: config.inputLDAP),
+        LDAPSection(ldapFunction: config.inputLDAP),
         Divider(thickness: 0.5, color: Colors.black),
         // BurnButton(burnFunction: configFunction) -- calls configFunction on success
       ],
