@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './sections/drive_section.dart';
 import './sections/specs_section.dart';
 import './models/configuration.dart';
+import './widgets/progress_bar.dart';
 
 void main() {
   runApp(CustoUSB());
@@ -14,7 +15,7 @@ class CustoUSB extends StatefulWidget {
 }
 
 class _CustoUSBState extends State<CustoUSB> {
-  Configuration config;
+  Configuration config = new Configuration();
 
   bool configured = false;
 
@@ -26,7 +27,7 @@ class _CustoUSBState extends State<CustoUSB> {
         home: Scaffold(
           body: !configured
               ? ConfigPage(configFunction: inputConfiguration)
-              : BurningPage(script: config.generateScript()),
+              : BurningPage()//script: config.generateScript()),
         ));
   }
 
@@ -63,12 +64,12 @@ class ConfigPage extends StatelessWidget {
 }
 
 class BurningPage extends StatelessWidget {
-  String script;
+  //String script;
 
-  BurningPage({this.script});
+  //BurningPage({this.script});
 
   @override
   Widget build(BuildContext context) {
-    return Text("To do");
+    return MyProgressBar();
   }
 }
