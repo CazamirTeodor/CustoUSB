@@ -13,14 +13,17 @@ class Distro {
       @required this.link});
 
   factory Distro.fromJson(Map<String, dynamic> json) {
-    print(
-        "Acum creez un Distro cu numele ${json['name']}, versiunile ${json['versions']} si link-ul ${json['link']}");
+    print(json);
     var versions_from_json = json['versions'];
     List<String> vers = new List<String>.from(versions_from_json);
+
+    var arch_from_json = json['archs'];
+    List<String> archs = new List<String>.from(arch_from_json);
+
     return Distro(
         name: json['name'],
         versions: vers,
-        archs: json['archs'],
+        archs: archs,
         link: json['link']);
   }
 }

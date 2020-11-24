@@ -6,8 +6,12 @@ import '../constants.dart';
 import '../widgets/dropdown_button.dart';
 
 class DriveSection extends StatelessWidget {
+  Function driveFunction; // updates the configuration's drive parameter
+
   String selectedDrive;
   List<String> drives = List<String>();
+
+  DriveSection({@required this.driveFunction});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class DriveSection extends StatelessWidget {
         children: [
           Text("Drive: ", style: kTextStyle(kColor: Colors.black)),
           Padding(padding: EdgeInsets.only(right: 10)),
-          MyDropdownButton(options: drives),
+          MyDropdownButton(options: drives, updateFunction: driveFunction),
         ],
       ),
     );
@@ -30,7 +34,7 @@ class DriveSection extends StatelessWidget {
   void getDrives() {
     var temp = Process.runSync('df', []).stdout.toString().split(" ");
     temp.removeWhere((element) => !element.contains(new RegExp(r'/dev')));
-    print(temp);
+
     temp.forEach((element) {
       drives.add(element.split("\n")[1].substring(5));
     });

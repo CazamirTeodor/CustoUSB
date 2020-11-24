@@ -12,6 +12,11 @@
 				"Trusty",
 				"Xenial"
 			],
+			"archs" : [
+				"i386",
+				"AMD64",
+				"ARM64"
+			],
 			"link": "http://ftp.us.ubuntu.org/ubuntu/"
 		},
 		{
@@ -23,6 +28,17 @@
 				"Bullseye",
 				"Buster",
 				"Jessie"
+			],
+			"archs" : [
+				"i386",
+				"AMD64",
+				"ARM64",
+				"ARMel",
+				"ARMhf",
+				"MIPSel",
+				"MIPS64el",
+				"PPC64el",
+				"S390x"
 			],
 			"link": "http://ftp.us.debian.org/debian/"
 		}

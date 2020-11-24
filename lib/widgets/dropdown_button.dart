@@ -1,10 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class MyDropdownButton extends StatefulWidget {
   List<String> options = [];
+  Function updateFunction;
 
-  MyDropdownButton({this.options});
+  MyDropdownButton({@required this.options, @required this.updateFunction});
 
   @override
   State<MyDropdownButton> createState() => _MyDropdownButtonState();
@@ -40,6 +43,7 @@ class _MyDropdownButtonState extends State<MyDropdownButton> {
           hint: Center(child: Text("Choose", style: kTextStyle(kColor: Colors.grey),)),
           onChanged: (e) {
             setState(() {
+              this.widget.updateFunction(e);
               selectedOption = e;
             });
           },
