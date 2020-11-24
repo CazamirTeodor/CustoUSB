@@ -1,0 +1,30 @@
+{
+	"distributions": [
+		{
+			"name": "Ubuntu",
+			"versions": [
+				"Bionic",
+				"Devel",
+				"Eoan",
+				"Focal",
+				"Groovy",
+				"Precise",
+				"Trusty",
+				"Xenial"
+			],
+			"link": "http://ftp.us.ubuntu.org/ubuntu/"
+		},
+		{
+			"name": "Debian",
+			"versions": [
+				"Debian 8.11",
+				"Debian 9.13",
+				"Debian 10.6",
+				"Bullseye",
+				"Buster",
+				"Jessie"
+			],
+			"link": "http://ftp.us.debian.org/debian/"
+		}
+	]
+}
