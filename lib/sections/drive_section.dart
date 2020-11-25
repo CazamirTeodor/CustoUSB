@@ -1,3 +1,4 @@
+import 'package:custo_usb/models/configuration.dart';
 import 'package:custo_usb/widgets/dropdown_button.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -6,12 +7,10 @@ import '../constants.dart';
 import '../widgets/dropdown_button.dart';
 
 class DriveSection extends StatelessWidget {
-  Function driveFunction; // updates the configuration's drive parameter
+  var config = Configuration();
 
   String selectedDrive;
   List<String> drives = List<String>();
-
-  DriveSection({@required this.driveFunction});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class DriveSection extends StatelessWidget {
         children: [
           Text("Drive: ", style: kTextStyle(kColor: Colors.black)),
           Padding(padding: EdgeInsets.only(right: 10)),
-          MyDropdownButton(options: drives, updateFunction: driveFunction),
+          MyDropdownButton(options: drives, updateParameter: "drive"),
         ],
       ),
     );

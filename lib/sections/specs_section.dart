@@ -36,7 +36,7 @@ class SpecsSection extends StatelessWidget {
                   ),
                   MyDropdownButton(
                     options: distros.map((e) => e.name).toList(),
-
+                    updateParameter: "distro",
                   )
                 ],
               ),
@@ -47,8 +47,10 @@ class SpecsSection extends StatelessWidget {
                     style: kTextStyle(kColor: Colors.black),
                   ),
                   MyDropdownButton(
-                      options:
-                          currentDistro != null ? currentDistro.versions : [])
+                    options:
+                        currentDistro != null ? currentDistro.versions : [],
+                    updateParameter: "version",
+                  )
                 ],
               ),
               Column(
@@ -58,7 +60,9 @@ class SpecsSection extends StatelessWidget {
                     style: kTextStyle(kColor: Colors.black),
                   ),
                   MyDropdownButton(
-                      options: currentDistro != null ? currentDistro.archs : [])
+                    options: currentDistro != null ? currentDistro.archs : [],
+                    updateParameter: "architecture",
+                  )
                 ],
               )
             ],

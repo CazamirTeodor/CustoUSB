@@ -1,15 +1,14 @@
+import 'package:custo_usb/models/configuration.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 class ConnectionButton extends StatefulWidget {
-  String ip;
   bool connection = false;
   bool started = false;
+
   String connectionString = "Check status";
+  var configuration = Configuration();
 
-  Stream<String> stream;
-
-  ConnectionButton({this.stream});
 
   @override
   State<ConnectionButton> createState() {
@@ -18,18 +17,6 @@ class ConnectionButton extends StatefulWidget {
 }
 
 class _ConnectionButtonState extends State<ConnectionButton> {
-  @override
-  void initState() {
-    super.initState();
-    if (widget.stream != null) {
-      widget.stream.listen((ip) {
-        setState(() {
-          this.widget.ip = ip;
-        });
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,9 +50,9 @@ class _ConnectionButtonState extends State<ConnectionButton> {
   }
 
   void checkConnectivity() {
-    if (this.widget.ip == null) return;
-    print("Trying to ping ${this.widget.ip}...");
-    Process.run('ping', ['-t', '2', '-W', '-1', this.widget.ip]).then((value) {
+    if (this.widget.configuration.ip == null) return;
+    print("Trying to ping ${this.widget.configuration.ip}...");
+    Process.run('ping', ['-t', '2', '-W', '-1', this.widget.configuration.ip]).then((value) {
       this.widget.started = true;
       print("Exit code: ${value.exitCode}");
       if (value.exitCode == 0)

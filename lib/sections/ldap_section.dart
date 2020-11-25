@@ -1,20 +1,15 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/connection_button.dart';
 import '../constants.dart';
+import '../models/configuration.dart';
 
 class LDAPSection extends StatelessWidget {
   TextEditingController _controllerIP = TextEditingController();
   TextEditingController _controllerDomain = TextEditingController();
 
-  StreamController<String> streamController = StreamController<String>();
-
-  Function ldapFunction;
-
-  LDAPSection({this.ldapFunction});
+  var configuration = Configuration();
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +61,11 @@ class LDAPSection extends StatelessWidget {
                           cursorHeight: 11,
                           style: kTextStyle(kColor: Colors.white),
                           controller: _controllerIP,
-                          onChanged: (value) {
-                            if (value != null) {
-                              streamController.add(value);
-                              ldapFunction(ip: value);
-                            }
+                          onChanged: (val) {
+                            //if (val != null) {
+                              configuration.updateParameter(
+                                  parameter: "ip", value: val);
+                            //}
                           },
                         )),
                     Padding(
@@ -95,14 +90,17 @@ class LDAPSection extends StatelessWidget {
                           cursorHeight: 11,
                           style: kTextStyle(kColor: Colors.white),
                           controller: _controllerDomain,
-                          onChanged: (value) {
-                              ldapFunction(domain: value);
-                            },
-                    )),
+                          onChanged: (val) {
+                            //f (val != null) {
+                              configuration.updateParameter(
+                                  parameter: "domain", value: val);
+                            //}
+                          },
+                        )),
                   ],
                 ),
                 Padding(padding: const EdgeInsets.only(left: 22)),
-                ConnectionButton(stream: streamController.stream)
+                ConnectionButton()
               ],
             ),
           ],

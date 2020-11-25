@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 import './sections/drive_section.dart';
@@ -5,6 +6,7 @@ import './sections/specs_section.dart';
 import './sections/ldap_section.dart';
 import './models/configuration.dart';
 import './widgets/progress_bar.dart';
+import './widgets/burn_button.dart';
 
 void main() {
   runApp(CustoUSB());
@@ -16,9 +18,24 @@ class CustoUSB extends StatefulWidget {
 }
 
 class _CustoUSBState extends State<CustoUSB> {
-  Configuration config = new Configuration();
+  var config = Configuration();
 
-  bool configured = false;
+  bool burning = false;
+  Stream<bool> burningStream;
+
+  @override
+  void initState()
+  {
+    burningStream = config.burningController.stream;
+    super.initState();
+    burningStream.listen((event) {
+      setState((){
+        burning = true;
+      });
+    });
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,39 +43,27 @@ class _CustoUSBState extends State<CustoUSB> {
         debugShowCheckedModeBanner: false,
         title: "CustoUSB",
         home: Scaffold(
-          body: !configured
-              ? ConfigPage(configFunction: inputConfiguration)
-              : BurningPage()//script: config.generateScript()),
+          body: !burning
+              ? ConfigPage()
+              : BurningPage()
         ));
-  }
-
-  void inputConfiguration(Configuration config) {
-    setState(() {
-      this.config = config;
-      this.configured = true;
-    });
   }
 }
 
 class ConfigPage extends StatelessWidget {
-  Function configFunction;
-  Configuration config = new Configuration();
-
-  ConfigPage({@required this.configFunction});
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DriveSection(driveFunction: config.inputDrive),
+        DriveSection(),
         Divider(thickness: 0.5, color: Colors.black),
         SpecsSection(),
         Divider(thickness: 0.5, color: Colors.black),
         // ToolsSection(toolsFunction: config.inputBinaries),
         Divider(thickness: 0.5, color: Colors.black),
-        LDAPSection(ldapFunction: config.inputLDAP),
-        Divider(thickness: 0.5, color: Colors.black),
-        // BurnButton(burnFunction: configFunction) -- calls configFunction on success
+        LDAPSection(),
+        Divider(thickness: 1, color: Colors.black, height: 0,),
+        BurnButton()
       ],
     );
   }
