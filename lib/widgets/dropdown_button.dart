@@ -9,7 +9,12 @@ class MyDropdownButton extends StatefulWidget {
   String updateParameter;
   var configuration = Configuration();
 
-  MyDropdownButton({@required this.options, @required this.updateParameter});
+  Function updateFunction;
+
+  MyDropdownButton(
+      {@required this.options,
+      @required this.updateParameter,
+      this.updateFunction});
 
   @override
   State<MyDropdownButton> createState() => _MyDropdownButtonState();
@@ -20,6 +25,13 @@ class _MyDropdownButtonState extends State<MyDropdownButton> {
 
   @override
   Widget build(BuildContext context) {
+    widget.options.singleWhere((element) {
+          return element == selectedOption;
+        },orElse: () {
+          selectedOption = null;
+          widget.configuration.updateParameter(parameter: widget.updateParameter, value: "");
+        });
+
     return Container(
       width: 100,
       height: 20,
@@ -42,11 +54,17 @@ class _MyDropdownButtonState extends State<MyDropdownButton> {
             );
           }).toList(),
           iconSize: 0,
-          hint: Center(child: Text("Choose", style: kTextStyle(kColor: Colors.grey),)),
+          hint: Center(
+              child: Text(
+            "Choose",
+            style: kTextStyle(kColor: Colors.grey),
+          )),
           onChanged: (e) {
             setState(() {
-              widget.configuration.updateParameter(parameter: widget.updateParameter, value: e);
+              widget.configuration
+                  .updateParameter(parameter: widget.updateParameter, value: e);
               selectedOption = e;
+              if (widget.updateFunction != null) widget.updateFunction(e);
             });
           },
         ),

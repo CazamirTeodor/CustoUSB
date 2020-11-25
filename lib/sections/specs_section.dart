@@ -5,10 +5,15 @@ import '../constants.dart';
 import '../models/distro.dart';
 import '../widgets/dropdown_button.dart';
 
-class SpecsSection extends StatelessWidget {
+class SpecsSection extends StatefulWidget {
+  @override
+  _SpecsSectionState createState() => _SpecsSectionState();
+}
+
+class _SpecsSectionState extends State<SpecsSection> {
   List<Distro> distros = List<Distro>();
+
   Distro currentDistro;
-  StreamController<String> currentDistroController = StreamController<String>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +42,7 @@ class SpecsSection extends StatelessWidget {
                   MyDropdownButton(
                     options: distros.map((e) => e.name).toList(),
                     updateParameter: "distro",
+                    updateFunction: controllerFunction
                   )
                 ],
               ),
@@ -79,7 +85,9 @@ class SpecsSection extends StatelessWidget {
   }
 
   void controllerFunction(String currentDistro) {
-    this.currentDistro =
-        distros.firstWhere((element) => element.name != currentDistro);
+    setState(() {
+      this.currentDistro =
+          distros.singleWhere((element) => element.name == currentDistro);
+    });
   }
 }

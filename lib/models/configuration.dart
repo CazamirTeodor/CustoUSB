@@ -58,10 +58,10 @@ class Configuration {
     if (drive.isEmpty) return false;
     if (distro == null) return false;
     if (distro.isEmpty) return false;
-    // if (version == null) return false;
-    // if (version.isEmpty) return false;
-    // if (architecture == null) return false;
-    // if (architecture.isEmpty) return false;
+    if (version == null) return false;
+    if (version.isEmpty) return false;
+    if (architecture == null) return false;
+    if (architecture.isEmpty) return false;
     // if (binaries == null) return false;
     // if (binaries.isEmpty) return false;
     if (ip == null) return false;
