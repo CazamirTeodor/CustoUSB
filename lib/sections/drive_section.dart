@@ -17,7 +17,7 @@ class DriveSection extends StatelessWidget {
     drives = [];
     getDrives();
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.only(top: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

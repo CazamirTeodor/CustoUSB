@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import './sections/drive_section.dart';
 import './sections/specs_section.dart';
 import './sections/ldap_section.dart';
+import './sections/tools_section.dart';
 import './models/configuration.dart';
 import './widgets/progress_bar.dart';
 import './widgets/burn_button.dart';
@@ -59,7 +60,7 @@ class ConfigPage extends StatelessWidget {
         Divider(thickness: 0.5, color: Colors.black),
         SpecsSection(),
         Divider(thickness: 0.5, color: Colors.black),
-        // ToolsSection(toolsFunction: config.inputBinaries),
+        ToolsSection(),
         Divider(thickness: 0.5, color: Colors.black),
         LDAPSection(),
         Divider(thickness: 1, color: Colors.black, height: 0,),

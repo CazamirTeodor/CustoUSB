@@ -15,8 +15,9 @@ class LDAPSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 90,
-      width: 320,
-      padding: EdgeInsets.only(top: 5),
+      width: 305,
+      padding: EdgeInsets.symmetric(vertical: 5),
+      margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.circular(20),
@@ -32,7 +33,7 @@ class LDAPSection extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(
                         vertical: 5,
-                        horizontal: 40,
+                        horizontal: 30,
                       ),
                       child:
                           Text("IP :", style: kTextStyle(kColor: Colors.white)),
@@ -62,10 +63,8 @@ class LDAPSection extends StatelessWidget {
                           style: kTextStyle(kColor: Colors.white),
                           controller: _controllerIP,
                           onChanged: (val) {
-                            //if (val != null) {
-                              configuration.updateParameter(
-                                  parameter: "ip", value: val);
-                            //}
+                            configuration.updateParameter(
+                                parameter: "ip", value: val);
                           },
                         )),
                     Padding(
@@ -91,10 +90,8 @@ class LDAPSection extends StatelessWidget {
                           style: kTextStyle(kColor: Colors.white),
                           controller: _controllerDomain,
                           onChanged: (val) {
-                            //f (val != null) {
-                              configuration.updateParameter(
-                                  parameter: "domain", value: val);
-                            //}
+                            configuration.updateParameter(
+                                parameter: "domain", value: val);
                           },
                         )),
                   ],
