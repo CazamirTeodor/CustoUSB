@@ -31,7 +31,7 @@ class _MySizeBarState extends State<MySizeBar> {
 
     return Container(
       width: 290,
-      height: 15,
+      height: 20,
       margin: EdgeInsets.only(top: 5),
       child: Center(
           child: Text(

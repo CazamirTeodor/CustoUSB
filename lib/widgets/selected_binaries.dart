@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class SelectedBinaries extends StatefulWidget {
-  List<String> wantedBinaries = ["xxh", "xterm"];
+  List<String> list ;
+
+  SelectedBinaries({this.list});
 
   @override
   SelectedBinariesState createState() => SelectedBinariesState();
@@ -12,7 +14,7 @@ class SelectedBinaries extends StatefulWidget {
 class SelectedBinariesState extends State<SelectedBinaries> {
   @override
   Widget build(BuildContext context) {
-    widget.wantedBinaries.sort((a, b) {
+    widget.list.sort((a, b) {
       return a.compareTo(b);
     });
     return Column(
@@ -32,7 +34,7 @@ class SelectedBinariesState extends State<SelectedBinaries> {
             child: ListView(
               children: this
                   .widget
-                  .wantedBinaries
+                  .list
                   .map((e) => Center(
                           child: Stack(
                         children: [

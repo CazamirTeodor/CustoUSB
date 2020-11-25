@@ -4,8 +4,10 @@ import '../constants.dart';
 import './binary.dart';
 
 class BinariesList extends StatefulWidget {
-  List<String> wantedBinaries = [];
-  List<String> allBinaries = ["telnet", "dd", "curl", "ssh"];
+  List<String> list;
+  Function updateBinaryFunction;
+
+  BinariesList({this.list, this.updateBinaryFunction});
 
   @override
   _BinariesListState createState() => _BinariesListState();
@@ -16,8 +18,7 @@ class _BinariesListState extends State<BinariesList> {
 
   @override
   Widget build(BuildContext context) {
-    widget.allBinaries.sort((a,b){ return a.compareTo(b);});
-    widget.wantedBinaries.sort((a,b){ return a.compareTo(b);});
+    widget.list.sort((a,b){ return a.compareTo(b);});
     
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +61,7 @@ class _BinariesListState extends State<BinariesList> {
             crossAxisSpacing: 7,
             padding: EdgeInsets.all(5),
             children:
-                this.widget.allBinaries.map((e) => Binary(name: e)).toList(),
+                this.widget.list.map((e) => Binary(name: e)).toList(),
           ),
         ),
       ],

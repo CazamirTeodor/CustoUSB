@@ -8,6 +8,7 @@ import '../constants.dart';
 
 class Binary extends StatefulWidget {
   String name;
+  Function updateFunction;
 
   Binary({this.name});
 
@@ -34,6 +35,8 @@ class BinaryState extends State<Binary> {
       onPressed: () {
         setState(() {
           _checked = !_checked;
+          if(_checked)
+            //widget.updateFunction(mode: "add",value: )
           print("Am apasat butonul!");
         });
       },
