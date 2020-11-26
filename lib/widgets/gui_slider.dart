@@ -11,8 +11,7 @@ class GuiSlider extends StatefulWidget {
 }
 
 class _GuiSliderState extends State<GuiSlider> {
-  int index;
-  int oldIndex;
+  int index = 0, oldIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +32,9 @@ class _GuiSliderState extends State<GuiSlider> {
             );
           }),
           onValueChanged: (val) {
-            if (widget.list[val] == "GUI")
-              {
-                //add graphical packets in selected binaries
-              }
-            else
-            {
+            if (widget.list[val] == "GUI") {
+              //add graphical packets in selected binaries
+            } else {
               // remove them
             }
             setState(() {

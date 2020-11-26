@@ -1,13 +1,14 @@
+import 'package:custo_usb/models/configuration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
-import './binary.dart';
+import '../models/binary.dart';
 
 class BinariesList extends StatefulWidget {
-  List<String> list;
-  Function updateBinaryFunction;
+  List<String> list = ["bin", "bash", "pwd"];
+  BinariesList();
 
-  BinariesList({this.list, this.updateBinaryFunction});
+  var config = Configuration();
 
   @override
   _BinariesListState createState() => _BinariesListState();
@@ -18,8 +19,10 @@ class _BinariesListState extends State<BinariesList> {
 
   @override
   Widget build(BuildContext context) {
-    widget.list.sort((a,b){ return a.compareTo(b);});
-    
+    widget.list.sort((a, b) {
+      return a.compareTo(b);
+    });
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,8 +63,11 @@ class _BinariesListState extends State<BinariesList> {
             mainAxisSpacing: 3,
             crossAxisSpacing: 7,
             padding: EdgeInsets.all(5),
-            children:
-                this.widget.list.map((e) => Binary(name: e)).toList(),
+            children: widget.list.map((e) {
+              if (widget.config.binaries.any((element) => element.name == e))
+                return Binary(name: e).getWidget(enabled: true);
+              return Binary(name: e).getWidget(enabled: false);
+            }).toList(),
           ),
         ),
       ],
