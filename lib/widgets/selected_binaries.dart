@@ -32,7 +32,9 @@ class SelectedBinaries extends StatelessWidget {
                         children: [
                           Center(
                               child: Text(
-                            e.name,
+                            e.name.length > 8
+                                ? e.name.substring(0, 5) + "..."
+                                : e.name,
                             style: kTextStyle(kColor: Colors.black),
                           )),
                           Positioned(
