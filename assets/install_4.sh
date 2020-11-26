@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#-------------------------
+
+	#network-manager net-tools wireless-tools wpagui curl openssh-server openssh-client blackbox xserver-xorg-core xserver-xorg xinit xterm screenfetch screen lxterminal vim gedit nano lxde wget sudo gnupg gnupg2
+#-------------------------
 
 
 if [ $# -eq 0 ]
@@ -21,13 +25,6 @@ else
 	apt install --no-install-recommends $* -y < set.txt && apt clean
 	" >> executa.sh
 
-
-	#aplicatii care trebuie instalate :
-	#network-manager net-tools wireless-tools wpagui \
-    #curl openssh-server openssh-client \
-    #blackbox xserver-xorg-core xserver-xorg xinit xterm \
-    #screenfetch screen lxterminal vim \
-    #nano lxde
 
 	chmod +x executa.sh
 	cp executa.sh LIVE_BOOT/chroot
