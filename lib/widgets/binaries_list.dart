@@ -46,14 +46,10 @@ class _BinariesListState extends State<BinariesList> {
               textAlign: TextAlign.center,
               cursorHeight: 11,
               style: kTextStyle(kColor: Colors.black),
-              //controller: _controller,
               onChanged: (val) {
-                print("Termenul scris: ${val}.");
                 setState(() {
                   searchItem = val;
                 });
-
-                // update binaries list if the name is not empty
               },
             )),
         FutureBuilder(
