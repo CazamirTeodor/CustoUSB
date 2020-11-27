@@ -1,17 +1,20 @@
+import 'package:custo_usb/models/configuration.dart';
 import 'package:flutter/material.dart';
+import '../models/binary.dart';
 
-class MySizeBar extends StatefulWidget {
-  double occupiedSize;
-  double maxSize;
+class MySizeBar extends StatelessWidget {
+  int binariesSize = 0;
+  int driveSize = 0;
+  int maxDriveSize = 4000;
 
-  MySizeBar({this.occupiedSize, this.maxSize});
-  @override
-  State<MySizeBar> createState() {
-    return _MySizeBarState();
+  MySizeBar() {
+    var config = Configuration();
+    config.binaries.forEach((element) {
+      binariesSize += element.getDimension();
+    });
+    driveSize = getDriveSize(config.drive);
   }
-}
 
-class _MySizeBarState extends State<MySizeBar> {
   @override
   Widget build(BuildContext context) {
     final Color background = Colors.white;
@@ -24,8 +27,8 @@ class _MySizeBarState extends State<MySizeBar> {
     ];
     final List<double> stops = [
       0.0,
-      this.widget.occupiedSize / this.widget.maxSize,
-      this.widget.occupiedSize / this.widget.maxSize,
+      (driveSize + binariesSize) / maxDriveSize,
+      (driveSize + binariesSize) / maxDriveSize,
       1.0
     ];
 
@@ -35,7 +38,7 @@ class _MySizeBarState extends State<MySizeBar> {
       margin: EdgeInsets.only(top: 5),
       child: Center(
           child: Text(
-        "${this.widget.occupiedSize.toString()} GB | ${this.widget.maxSize.toString()} GB",
+        "${(driveSize + binariesSize).toString()} MB | ${maxDriveSize.toString()} MB",
         style: TextStyle(fontSize: 10),
       )),
       decoration: BoxDecoration(
@@ -48,5 +51,9 @@ class _MySizeBarState extends State<MySizeBar> {
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: Colors.black)),
     );
+  }
+
+  int getDriveSize(String driveName) {
+    return 2000;
   }
 }

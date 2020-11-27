@@ -7,8 +7,11 @@ class Binary {
   String name;
   int dimension;
 
-  Binary({this.name}) {
-    // dimension = apt get dimension;
+  Binary({this.name});
+
+  int getDimension()
+  {
+    return 100;
   }
 
   Widget getWidget({bool enabled}) {

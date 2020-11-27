@@ -1,6 +1,7 @@
 import 'package:custo_usb/models/configuration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import '../constants.dart';
 
 class SelectedBinaries extends StatelessWidget {
@@ -32,7 +33,7 @@ class SelectedBinaries extends StatelessWidget {
                         children: [
                           Center(
                               child: Text(
-                            e.name.length > 8
+                            e.name.length > 7
                                 ? e.name.substring(0, 5) + "..."
                                 : e.name,
                             style: kTextStyle(kColor: Colors.black),

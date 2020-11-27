@@ -8,6 +8,7 @@ import './sections/tools_section.dart';
 import './models/configuration.dart';
 import './widgets/progress_bar.dart';
 import './widgets/burn_button.dart';
+import './widgets/warning.dart';
 
 void main() {
   runApp(CustoUSB());
@@ -63,6 +64,7 @@ class ConfigPage extends StatelessWidget {
         ToolsSection(),
         Divider(thickness: 0.5, color: Colors.black),
         LDAPSection(),
+        Warning(),
         Divider(thickness: 1, color: Colors.black, height: 0,),
         BurnButton()
       ],

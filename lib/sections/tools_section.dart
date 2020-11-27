@@ -9,9 +9,12 @@ import '../models/binary.dart';
 
 class ToolsSection extends StatefulWidget {
   Stream<List<Binary>> binariesStream;
+  Stream<String> driveStream;
+
   ToolsSection() {
     var config = Configuration();
     binariesStream = config.binariesController.stream;
+    driveStream = config.driveController.stream;
   }
   @override
   _ToolsSectionState createState() => _ToolsSectionState();
@@ -23,6 +26,10 @@ class _ToolsSectionState extends State<ToolsSection> {
   @override
   void initState() {
     super.initState();
+    widget.driveStream.listen((drive) {
+      setState(() {});
+    });
+
     widget.binariesStream.listen((event) {
       setState(() {
         selectedBinaries = event;
@@ -50,10 +57,7 @@ class _ToolsSectionState extends State<ToolsSection> {
             GuiSlider(),
           ],
         ),
-        MySizeBar(
-          occupiedSize: 3.23,
-          maxSize: 8.00,
-        )
+        MySizeBar()
       ],
     );
   }

@@ -8,10 +8,11 @@ class Configuration {
 
   bool configured = false;
 
+StreamController<String> driveController = StreamController<String>();
   StreamController<bool> burningController = StreamController<bool>();
   StreamController<bool> configuredController = StreamController<bool>();
   StreamController<List<Binary>> binariesController =
-      StreamController<List<Binary>>();
+      StreamController<List<Binary>>.broadcast();
 
   static final Configuration _instance = Configuration._internal();
 
@@ -32,6 +33,7 @@ class Configuration {
     switch (parameter) {
       case "drive":
         drive = value;
+        driveController.add(value);
         break;
       case "distro":
         distro = value;
@@ -74,8 +76,8 @@ class Configuration {
     if (version.isEmpty) return false;
     if (architecture == null) return false;
     if (architecture.isEmpty) return false;
-    // if (binaries == null) return false;
-    // if (binaries.isEmpty) return false;
+    //if (binaries == null) return false;
+    //if (binaries.isEmpty) return false;
     if (ip == null) return false;
     if (ip.isEmpty) return false;
     if (domain == null) return false;
