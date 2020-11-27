@@ -1,6 +1,8 @@
 #!/bin/bash
 
-
+#-------------------------
+# i386 stretch / amd64 buster
+#-------------------------
 
 if [ $# -ne 2 ]
 
@@ -10,6 +12,5 @@ if [ $# -ne 2 ]
 	exit 1
 fi
 
- 	# i386 stretch / amd64 buster
 	sudo debootstrap --arch=$1 --variant=minbase $2 LIVE_BOOT/chroot http://ftp.us.debian.org/debian/
 

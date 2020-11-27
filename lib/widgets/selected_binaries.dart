@@ -1,22 +1,17 @@
+import 'package:custo_usb/models/configuration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import '../constants.dart';
 
-class SelectedBinaries extends StatefulWidget {
-  List<String> list ;
-
-  SelectedBinaries({this.list});
-
-  @override
-  SelectedBinariesState createState() => SelectedBinariesState();
-}
-
-class SelectedBinariesState extends State<SelectedBinaries> {
+class SelectedBinaries extends StatelessWidget {
+  var config = Configuration();
   @override
   Widget build(BuildContext context) {
-    widget.list.sort((a, b) {
-      return a.compareTo(b);
-    });
+    if (config.binaries != null)
+      config.binaries.sort((a, b) {
+        return a.name.compareTo(b.name);
+      });
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -32,22 +27,34 @@ class SelectedBinariesState extends State<SelectedBinaries> {
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: Colors.black)),
             child: ListView(
-              children: this
-                  .widget
-                  .list
+              children: config.binaries
                   .map((e) => Center(
                           child: Stack(
                         children: [
-                          Text(e),
+                          Center(
+                              child: Text(
+                            e.name.length > 7
+                                ? e.name.substring(0, 5) + "..."
+                                : e.name,
+                            style: kTextStyle(kColor: Colors.black),
+                          )),
                           Positioned(
-                            child: IconButton(
-                              icon: Icon(Icons.close),
-                              onPressed: () {},
-                              iconSize: 12,
-                              color: Colors.red,
-                              splashRadius: 0.1,
-                              visualDensity: VisualDensity.compact,
-                            ),
+                            right: 0,
+                            top: -1,
+                            child: SizedBox(
+                                height: 18.0,
+                                width: 18.0,
+                                child: IconButton(
+                                    padding: EdgeInsets.all(1.0),
+                                    color: Colors.redAccent,
+                                    splashRadius: 1,
+                                    icon: new Icon(Icons.close, size: 12.0),
+                                    onPressed: () {
+                                      print("Trying to delete ${e.name}.");
+                                      config.updateParameter(
+                                          parameter: "binaries",
+                                          binaryName: e.name);
+                                    })),
                           )
                         ],
                       )))

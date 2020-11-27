@@ -4,17 +4,38 @@ import 'package:flutter/material.dart';
 import '../widgets/binaries_list.dart';
 import '../widgets/selected_binaries.dart';
 import '../widgets/size_bar.dart';
+import '../models/configuration.dart';
+import '../models/binary.dart';
 
 class ToolsSection extends StatefulWidget {
+  Stream<List<Binary>> binariesStream;
+  Stream<String> driveStream;
+
+  ToolsSection() {
+    var config = Configuration();
+    binariesStream = config.binariesController.stream;
+    driveStream = config.driveController.stream;
+  }
   @override
   _ToolsSectionState createState() => _ToolsSectionState();
 }
 
 class _ToolsSectionState extends State<ToolsSection> {
-  TextEditingController _controller = TextEditingController();
+  List<Binary> selectedBinaries = [];
 
-  List<String> allBinaries = ["bash", "zsh", "xterm", "curl"];
-  List<String> selectedBinaries = ["ssh"];
+  @override
+  void initState() {
+    super.initState();
+    widget.driveStream.listen((drive) {
+      setState(() {});
+    });
+
+    widget.binariesStream.listen((event) {
+      setState(() {
+        selectedBinaries = event;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,43 +44,21 @@ class _ToolsSectionState extends State<ToolsSection> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SelectedBinaries(list: selectedBinaries),
-            BinariesList(list: allBinaries)
+            SelectedBinaries(),
+            BinariesList(),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Graphical mode:",
-              style: kTextStyle(kColor: Colors.black),
-            ),
+            Text("Graphical mode:", style: kTextStyle(kColor: Colors.black)),
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20)),
             GuiSlider(),
           ],
         ),
-        MySizeBar(
-          occupiedSize: 3.23,
-          maxSize: 8.00,
-        )
+        MySizeBar()
       ],
     );
-  }
-
-  void updateBinary({String mode, String name}) {
-    switch (mode) {
-      case "add":
-        setState(() {
-          selectedBinaries.add(name);
-        });
-        break;
-
-      case "remove":
-        setState(() {
-          selectedBinaries.remove(name);
-        });
-        break;
-    }
   }
 }

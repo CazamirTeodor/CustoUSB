@@ -1,14 +1,18 @@
 import 'dart:async';
+import './binary.dart';
 
 class Configuration {
   String drive, distro, version, architecture;
-  List<String> binaries;
+  List<Binary> binaries = new List<Binary>();
   String ip, domain;
 
   bool configured = false;
-  
+
+StreamController<String> driveController = StreamController<String>();
   StreamController<bool> burningController = StreamController<bool>();
   StreamController<bool> configuredController = StreamController<bool>();
+  StreamController<List<Binary>> binariesController =
+      StreamController<List<Binary>>.broadcast();
 
   static final Configuration _instance = Configuration._internal();
 
@@ -25,10 +29,11 @@ class Configuration {
     return to_return;
   }
 
-  void updateParameter({String parameter, String value, List<String> bin}) {
+  void updateParameter({String parameter, String value, String binaryName}) {
     switch (parameter) {
       case "drive":
         drive = value;
+        driveController.add(value);
         break;
       case "distro":
         distro = value;
@@ -40,7 +45,16 @@ class Configuration {
         architecture = value;
         break;
       case "binaries":
-        binaries = bin;
+        Binary binary = binaries.singleWhere((element) {
+          return element.name == binaryName;
+        }, orElse: () {
+          return null;
+        });
+        if (binary == null)
+          binaries.add(Binary(name: binaryName));
+        else
+          binaries.remove(binary);
+        binariesController.add(binaries);
         break;
       case "ip":
         ip = value;
@@ -62,8 +76,8 @@ class Configuration {
     if (version.isEmpty) return false;
     if (architecture == null) return false;
     if (architecture.isEmpty) return false;
-    // if (binaries == null) return false;
-    // if (binaries.isEmpty) return false;
+    //if (binaries == null) return false;
+    //if (binaries.isEmpty) return false;
     if (ip == null) return false;
     if (ip.isEmpty) return false;
     if (domain == null) return false;
