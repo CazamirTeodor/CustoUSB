@@ -1,10 +1,11 @@
 #!/bin/bash
 
 #-------------------------
-# i386 stretch / amd64 buster
+# amd64		focal 	http://ubuntu.osuosl.org/ubuntu/  
+# amd64 	buster 	http://debian.osuosl.org/debian/
 #-------------------------
 
-if [ $# -ne 2 ]
+if [ $# -ne 3 ]
 
 	then
 	 
@@ -12,5 +13,5 @@ if [ $# -ne 2 ]
 	exit 1
 fi
 
-	sudo debootstrap --arch=$1 --variant=minbase $2 LIVE_BOOT/chroot http://ftp.us.debian.org/debian/
+	sudo debootstrap --arch=$1 --variant=minbase $2 LIVE_BOOT/chroot $3
 

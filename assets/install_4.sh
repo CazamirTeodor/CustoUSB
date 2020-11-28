@@ -2,7 +2,9 @@
 
 #-------------------------
 
-	#network-manager net-tools wireless-tools wpagui curl openssh-server openssh-client blackbox xserver-xorg-core xserver-xorg xinit xterm screenfetch screen lxterminal vim gedit nano lxde wget sudo gnupg gnupg2
+	##network-manager net-tools wireless-tools wpagui curl openssh-server openssh-client blackbox xserver-xorg-core xserver-xorg xinit xterm screenfetch screen lxterminal vim gedit nano lxde wget sudo gnupg gnupg2
+	##kde-plasma-desktop
+	#network-manager net-tools wireless-tools wpagui curl openssh-server openssh-client blackbox xserver-xorg-core xserver-xorg xinit xterm screenfetch screen lxterminal gedit lxde 
 #-------------------------
 
 
@@ -22,17 +24,19 @@ else
 
 	echo "#!/bin/bash
 
-	apt install --no-install-recommends $* -y < set.txt && apt clean
+	apt-get update
+	apt-get install --no-install-recommends $* -y < set.txt && apt clean
+
 	" >> executa.sh
 
 
 	chmod +x executa.sh
-	cp executa.sh LIVE_BOOT/chroot
-	cp set.txt LIVE_BOOT/chroot
 	cat executa.sh 
-	rm executa.sh set.txt
+	mv executa.sh set.txt LIVE_BOOT/chroot
+	
+
 	chroot LIVE_BOOT/chroot bash -c /executa.sh $1
-	rm LIVE_BOOT/chroot/executa.sh LIVE_BOOT/chroot/set.txt	
+
 
 fi
 
