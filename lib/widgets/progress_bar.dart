@@ -91,9 +91,9 @@ class _MyProgressBarState extends State<MyProgressBar> {
   }
 
   void increaseProgressBar() {
-    if (height < 534) {
+    if (height < 560) {
       setState(() {
-        height += 534;
+        height += 560;
       });
       return;
     }

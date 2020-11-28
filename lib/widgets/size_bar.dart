@@ -1,6 +1,6 @@
 import 'package:custo_usb/models/configuration.dart';
 import 'package:flutter/material.dart';
-import '../models/binary.dart';
+import 'dart:io';
 
 class MySizeBar extends StatelessWidget {
   int binariesSize = 0;
@@ -18,7 +18,8 @@ class MySizeBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color background = Colors.white;
-    final Color fill = Colors.green;
+    final Color fill =
+        (driveSize + binariesSize) > maxDriveSize ? Colors.red : Colors.green;
     final List<Color> gradient = [
       fill,
       fill,
@@ -54,6 +55,7 @@ class MySizeBar extends StatelessWidget {
   }
 
   int getDriveSize(String driveName) {
+    //Process.runSync(executable, arguments)
     return 2000;
   }
 }

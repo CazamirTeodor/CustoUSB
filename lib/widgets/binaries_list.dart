@@ -16,7 +16,7 @@ class BinariesList extends StatefulWidget {
 }
 
 class _BinariesListState extends State<BinariesList> {
-  //TextEditingController _controller = TextEditingController();
+
   String searchItem = "";
 
   @override

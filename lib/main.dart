@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:window_size/window_size.dart';
 
 import './sections/drive_section.dart';
 import './sections/specs_section.dart';
@@ -11,6 +13,11 @@ import './widgets/burn_button.dart';
 import './widgets/warning.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    setWindowMinSize(const Size(350, 598));
+    setWindowMaxSize(const Size(350, 598));
+  }
   runApp(CustoUSB());
 }
 
@@ -28,6 +35,8 @@ class _CustoUSBState extends State<CustoUSB> {
   @override
   void initState()
   {
+    //setWindowFrame(Rect.fromLTRB(800, 300.0, 1150.0, 898));
+    
     burningStream = config.burningController.stream;
     super.initState();
     burningStream.listen((event) {
