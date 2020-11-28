@@ -22,9 +22,9 @@ else
 	" >> executa.sh
 
 	chmod +x executa.sh
-	cp executa.sh LIVE_BOOT/chroot
 	cat executa.sh
-	rm executa.sh
+	mv executa.sh LIVE_BOOT/chroot
+	
 	chroot LIVE_BOOT/chroot bash -c /executa.sh $1
 	rm LIVE_BOOT/chroot/executa.sh
 	
