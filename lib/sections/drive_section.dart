@@ -31,11 +31,27 @@ class DriveSection extends StatelessWidget {
   }
 
   void getDrives() {
-    var temp = Process.runSync('df', []).stdout.toString().split(" ");
+    var temp = Process.runSync('df', []).stdout.toString().split("\n");
+
     temp.removeWhere((element) => !element.contains(new RegExp(r'/dev')));
 
     temp.forEach((element) {
-      drives.add(element.split("\n")[1].substring(5));
+      element.trim();
+      var list = element.split(" ");
+      list.removeWhere((element) => element == "");
+
+      if (list[8].startsWith("/Volumes/")) {
+        StringBuffer to_add = StringBuffer();
+        to_add.write(list[8].substring(9));
+
+        if (list.length > 9) {
+          for (int i = 9; i < list.length; i++) to_add.write(" " + list[i]);
+        }
+
+        drives.add(to_add.toString());
+        return;
+      }
     });
+
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import './binary.dart';
 
 class Configuration {
@@ -9,7 +10,7 @@ class Configuration {
 
   bool configured = false;
 
-StreamController<String> driveController = StreamController<String>();
+  StreamController<String> driveController = StreamController<String>();
   StreamController<bool> burningController = StreamController<bool>();
   StreamController<bool> configuredController = StreamController<bool>();
   StreamController<List<Binary>> binariesController =
@@ -33,7 +34,7 @@ StreamController<String> driveController = StreamController<String>();
   void updateParameter({String parameter, String value, String binaryName}) {
     switch (parameter) {
       case "drive":
-        drive = value;
+        drive = getDriveByName(value);
         driveController.add(value);
         break;
       case "distro":
@@ -63,7 +64,7 @@ StreamController<String> driveController = StreamController<String>();
       case "domain":
         domain = value;
         break;
-        case "rootPassword":
+      case "rootPassword":
         rootPassword = value;
         break;
     }
@@ -98,5 +99,33 @@ StreamController<String> driveController = StreamController<String>();
     print("Binaries: ${binaries}");
     print("Ip: ${ip}");
     print("Domain: ${domain}");
+    print("Root password: ${rootPassword}");
+  }
+
+  String getDriveByName(String driveName) {
+    String to_return;
+
+    var temp = Process.runSync('df', []).stdout.toString().split("\n");
+
+    temp.removeWhere((element) => !element.contains(new RegExp(r'/dev')));
+
+    temp.forEach((element) {
+      element.trim();
+      var list = element.split(" ");
+      list.removeWhere((element) => element == "");
+
+      if (list[8].startsWith("/Volumes/")) {
+        StringBuffer to_add = StringBuffer();
+        to_add.write(list[8].substring(9));
+
+        if (list.length > 9) {
+          for (int i = 9; i < list.length; i++) to_add.write(" " + list[i]);
+        }
+
+        if (to_add.toString() == driveName) to_return = list[0];
+        return;
+      }
+    });
+    return to_return;
   }
 }

@@ -5,14 +5,14 @@ import 'dart:io';
 class MySizeBar extends StatelessWidget {
   int binariesSize = 0;
   int driveSize = 0;
-  int maxDriveSize = 4000;
+  int maxDriveSize;
 
   MySizeBar() {
     var config = Configuration();
     config.binaries.forEach((element) {
       binariesSize += element.getDimension();
     });
-    driveSize = getDriveSize(config.drive);
+    maxDriveSize = getDriveSize();
   }
 
   @override
@@ -39,7 +39,7 @@ class MySizeBar extends StatelessWidget {
       margin: EdgeInsets.only(top: 5),
       child: Center(
           child: Text(
-        "${(driveSize + binariesSize).toString()} MB | ${maxDriveSize.toString()} MB",
+        "${(driveSize + binariesSize)} MB | ${maxDriveSize} MB",
         style: TextStyle(fontSize: 10),
       )),
       decoration: BoxDecoration(
@@ -54,10 +54,23 @@ class MySizeBar extends StatelessWidget {
     );
   }
 
-  int getDriveSize(String driveName) {
+  int getDriveSize() {
+    int to_return = 0;
+    var drive = Configuration().drive;
 
-    
-    //Process.runSync(executable, arguments)
-    return 2000;
+    var drives = Process.runSync("df", ["-m"]).stdout.toString().split("\n");
+    drives.removeWhere((element) => !element.contains(new RegExp(r'/dev')));
+
+    drives.forEach((element) {
+      element.trim();
+      var list = element.split(" ");
+      list.removeWhere((element) => element == "");
+      if (list[0] == drive) {
+        to_return = int.parse(list[1]);
+        return;
+      }
+    });
+
+    return to_return;
   }
 }
