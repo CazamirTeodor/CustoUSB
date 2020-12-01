@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^0.19.2+1
   window_size:
     git:
       url: git://github.com/google/flutter-desktop-embedding.git
@@ -55,6 +56,8 @@ flutter:
       - assets/distros.json
       - assets/binaries.json
       - assets/warning.png
+      - assets/checked.png
+      - assets/unchecked.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

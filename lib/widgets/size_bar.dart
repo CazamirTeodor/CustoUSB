@@ -55,6 +55,8 @@ class MySizeBar extends StatelessWidget {
   }
 
   int getDriveSize(String driveName) {
+
+    
     //Process.runSync(executable, arguments)
     return 2000;
   }

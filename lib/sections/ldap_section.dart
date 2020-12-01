@@ -1,3 +1,4 @@
+import 'package:custo_usb/sections/root_subsection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,9 +15,8 @@ class LDAPSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 90,
+      height: 105,
       width: 305,
-      padding: EdgeInsets.symmetric(vertical: 5),
       margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         color: Colors.black,
@@ -25,18 +25,18 @@ class LDAPSection extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            Text("LDAP Server", style: kTextStyle(kColor: Colors.white)),
+            Container(
+                margin: EdgeInsets.symmetric(vertical: 5),
+                child: Text("LDAP Server",
+                    style: kTextStyle(kColor: Colors.white))),
             Row(
               children: [
                 Column(
                   children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 5,
-                        horizontal: 30,
-                      ),
-                      child:
-                          Text("IP :", style: kTextStyle(kColor: Colors.white)),
+                    Text("IP :", style: kTextStyle(kColor: Colors.white)),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 4, horizontal: 50),
                     ),
                     Text("Domain :", style: kTextStyle(kColor: Colors.white)),
                   ],
@@ -94,12 +94,16 @@ class LDAPSection extends StatelessWidget {
                                 parameter: "domain", value: val);
                           },
                         )),
+                    Padding(
+                      padding: EdgeInsets.only(top: 5),
+                    ),
                   ],
                 ),
-                Padding(padding: const EdgeInsets.only(left: 22)),
-                ConnectionButton()
+                Padding(padding: const EdgeInsets.only(left: 10)),
+                ConnectionButton(),
               ],
             ),
+            RootSubsection()
           ],
         ),
       ),

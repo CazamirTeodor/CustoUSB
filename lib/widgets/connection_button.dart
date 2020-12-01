@@ -21,12 +21,13 @@ class _ConnectionButtonState extends State<ConnectionButton> {
   Widget build(BuildContext context) {
     return Container(
       width: 70,
+      margin: EdgeInsets.only(bottom: 7),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 50,
-            height: 50,
+            width: 60,
+            height: 35,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(13)),
               color: this.widget.started
@@ -37,6 +38,7 @@ class _ConnectionButtonState extends State<ConnectionButton> {
             child: IconButton(
                 onPressed: checkConnectivity,
                 icon: Icon(Icons.computer_rounded),
+                iconSize: 20,
                 color: Colors.white,
                 tooltip: 'Check server connectivity'),
           ),

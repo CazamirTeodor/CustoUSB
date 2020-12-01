@@ -5,6 +5,7 @@ class Configuration {
   String drive, distro, version, architecture;
   List<Binary> binaries = new List<Binary>();
   String ip, domain;
+  String rootPassword;
 
   bool configured = false;
 
@@ -61,6 +62,9 @@ StreamController<String> driveController = StreamController<String>();
         break;
       case "domain":
         domain = value;
+        break;
+        case "rootPassword":
+        rootPassword = value;
         break;
     }
     configured = getStatus();

@@ -15,8 +15,8 @@ import './widgets/warning.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-    setWindowMinSize(const Size(350, 598));
-    setWindowMaxSize(const Size(350, 598));
+    setWindowMinSize(const Size(350, 613));
+    setWindowMaxSize(const Size(350, 613));
   }
   runApp(CustoUSB());
 }
@@ -35,7 +35,6 @@ class _CustoUSBState extends State<CustoUSB> {
   @override
   void initState()
   {
-    //setWindowFrame(Rect.fromLTRB(800, 300.0, 1150.0, 898));
     
     burningStream = config.burningController.stream;
     super.initState();
