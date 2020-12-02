@@ -43,7 +43,7 @@ class MySizeBar extends StatefulWidget {
   void updateBinariesSize() {
     var config = Configuration();
     config.binaries.forEach((element) {
-      binariesSize += element.getDimension();
+      binariesSize += element.dimension;
     });
     maxDriveSize = getDriveSize();
   }

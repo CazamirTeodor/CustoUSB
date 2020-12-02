@@ -54,25 +54,5 @@ class DriveSection extends StatelessWidget {
         }
       });
     }
-
-    // if (Platform.isMacOS) {
-    //   temp.forEach((element) {
-    //     element.trim();
-    //     var list = element.split(" ");
-    //     list.removeWhere((element) => element == "");
-
-    //     if (list[8].startsWith("/Volumes/")) {
-    //       StringBuffer to_add = StringBuffer();
-    //       to_add.write(list[8].substring(8));
-
-    //       if (list.length > 9) {
-    //         for (int i = 9; i < list.length; i++) to_add.write(" " + list[i]);
-    //       }
-
-    //       drives.add(to_add.toString());
-    //       return;
-    //     }
-    //   });
-    // }
   }
 }
