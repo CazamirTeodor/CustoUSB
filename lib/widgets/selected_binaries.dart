@@ -1,11 +1,33 @@
 import 'package:custo_usb/models/configuration.dart';
+import 'package:custo_usb/widgets/binary.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import '../constants.dart';
 
-class SelectedBinaries extends StatelessWidget {
+class SelectedBinaries extends StatefulWidget {
+  Stream<List<BinaryWidget>> binariesStream;
+
+  SelectedBinaries() {
+    var config = Configuration();
+
+    binariesStream = config.binariesController.stream;
+  }
+  @override
+  _SelectedBinariesState createState() => _SelectedBinariesState();
+}
+
+class _SelectedBinariesState extends State<SelectedBinaries> {
   var config = Configuration();
+
+  @override
+  void initState() {
+    super.initState();
+    widget.binariesStream.listen((event) {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (config.binaries != null)

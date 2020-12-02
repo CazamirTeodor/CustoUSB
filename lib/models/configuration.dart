@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-import './binary.dart';
+import '../widgets/binary.dart';
 
 class Configuration {
   String drive, distro, version, architecture;
-  List<Binary> binaries = new List<Binary>();
+  List<BinaryWidget> binaries = new List<BinaryWidget>();
   String ip, domain;
   String rootPassword;
 
@@ -13,8 +13,8 @@ class Configuration {
   StreamController<String> driveController = StreamController<String>();
   StreamController<bool> burningController = StreamController<bool>();
   StreamController<bool> configuredController = StreamController<bool>();
-  StreamController<List<Binary>> binariesController =
-      StreamController<List<Binary>>.broadcast();
+  StreamController<List<BinaryWidget>> binariesController =
+      StreamController<List<BinaryWidget>>.broadcast();
 
   static final Configuration _instance = Configuration._internal();
 
@@ -47,13 +47,13 @@ class Configuration {
         architecture = value;
         break;
       case "binaries":
-        Binary binary = binaries.singleWhere((element) {
+        BinaryWidget binary = binaries.singleWhere((element) {
           return element.name == binaryName;
         }, orElse: () {
           return null;
         });
         if (binary == null)
-          binaries.add(Binary(name: binaryName));
+          binaries.add(BinaryWidget(name: binaryName));
         else
           binaries.remove(binary);
         binariesController.add(binaries);
@@ -81,8 +81,6 @@ class Configuration {
     if (version.isEmpty) return false;
     if (architecture == null) return false;
     if (architecture.isEmpty) return false;
-    //if (binaries == null) return false;
-    //if (binaries.isEmpty) return false;
     if (ip == null) return false;
     if (ip.isEmpty) return false;
     if (domain == null) return false;

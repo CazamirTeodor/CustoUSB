@@ -5,11 +5,13 @@ import '../widgets/binaries_list.dart';
 import '../widgets/selected_binaries.dart';
 import '../widgets/size_bar.dart';
 import '../models/configuration.dart';
-import '../models/binary.dart';
+import '../widgets/binary.dart';
 
 class ToolsSection extends StatefulWidget {
-  Stream<List<Binary>> binariesStream;
+  Stream<List<BinaryWidget>> binariesStream;
   Stream<String> driveStream;
+
+  Widget allBinaries = BinariesList();
 
   ToolsSection() {
     var config = Configuration();
@@ -21,8 +23,6 @@ class ToolsSection extends StatefulWidget {
 }
 
 class _ToolsSectionState extends State<ToolsSection> {
-  List<Binary> selectedBinaries = [];
-
   @override
   void initState() {
     super.initState();
@@ -31,9 +31,7 @@ class _ToolsSectionState extends State<ToolsSection> {
     });
 
     widget.binariesStream.listen((event) {
-      setState(() {
-        //selectedBinaries = event;
-      });
+      setState(() {});
     });
   }
 
@@ -45,7 +43,7 @@ class _ToolsSectionState extends State<ToolsSection> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SelectedBinaries(),
-            BinariesList(),
+            widget.allBinaries,
           ],
         ),
         Row(

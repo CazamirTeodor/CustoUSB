@@ -2,12 +2,12 @@ import 'package:custo_usb/models/configuration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'dart:io';
 import '../constants.dart';
-import '../models/binary.dart';
+import 'binary.dart';
 
 class BinariesList extends StatefulWidget {
-  List<Binary> list = [];
-  BinariesList();
+  List<BinaryWidget> list = [];
 
   var config = Configuration();
 
@@ -16,7 +16,6 @@ class BinariesList extends StatefulWidget {
 }
 
 class _BinariesListState extends State<BinariesList> {
-
   String searchItem = "";
 
   @override
@@ -62,9 +61,14 @@ class _BinariesListState extends State<BinariesList> {
                 var binaries_from_json = json['binaries'];
 
                 binaries_from_json.forEach((element) {
-                  widget.list.add(Binary(name: element));
+                  widget.list.add(BinaryWidget(name: element));
                 });
               }
+              List<int> dimensions = getDimensions(widget.list);
+              for (int i = 0; i < dimensions.length; i++) {
+                widget.list[i].dimension = dimensions[i];
+              }
+
               return Container(
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                 margin: EdgeInsets.only(top: 5),
@@ -83,22 +87,35 @@ class _BinariesListState extends State<BinariesList> {
                       ? widget.list
                           .where(
                               (element) => element.name.startsWith(searchItem))
-                          .map((e) {
-                          if (widget.config.binaries
-                              .any((element) => element.name == e.name))
-                            return e.getWidget(enabled: true);
-                          return e.getWidget(enabled: false);
-                        }).toList()
-                      : widget.list.map((e) {
-                          if (widget.config.binaries
-                              .any((element) => element.name == e.name))
-                            return e.getWidget(enabled: true);
-                          return e.getWidget(enabled: false);
-                        }).toList(),
+                          .toList()
+                      : widget.list,
                 ),
               );
             }),
       ],
     );
+  }
+
+  List<int> getDimensions(List<BinaryWidget> list) {
+    List<int> to_return = List<int>();
+    StringBuffer packages_names = StringBuffer();
+
+    list.forEach((element) {
+      packages_names.write(element.name + " ");
+    });
+
+    var result = Process.runSync("apt-cache", [
+      "--no-all-versions",
+      "show",
+      packages_names.toString()
+    ]).stdout.toString();
+    List<String> rows = result.split("\n");
+    rows.removeWhere((element) => !element.startsWith("Installed-Size:"));
+    rows.forEach((element) {
+      List<String> row = element.split(" ");
+      to_return.add(int.parse(row[1]));
+    });
+
+    return to_return;
   }
 }
