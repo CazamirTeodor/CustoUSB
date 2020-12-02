@@ -32,7 +32,7 @@ class _ToolsSectionState extends State<ToolsSection> {
 
     widget.binariesStream.listen((event) {
       setState(() {
-        selectedBinaries = event;
+        //selectedBinaries = event;
       });
     });
   }

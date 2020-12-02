@@ -2,16 +2,33 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../models/configuration.dart';
+import 'dart:io';
 
 class Binary {
   String name;
   int dimension;
 
-  Binary({this.name});
+  Binary({this.name}) {}
 
-  int getDimension()
-  {
-    return 100;
+  int getDimension() {
+    if (dimension != null)
+      return dimension;
+    else {
+      if (this.name != null) {
+        var output = Process.runSync(
+            "apt-cache", ["--no-all-versions", "show", "${this.name}"]);
+        if (output.exitCode == 0) {
+          List<String> rows = output.stdout.toString().split("\n");
+          rows.removeWhere((element) => !element.startsWith("Installed-Size:"));
+          List<String> cols = rows[0].split(" ");
+
+          dimension = int.parse(cols[1]);
+          return dimension;
+        }
+      } else {
+        return 0;
+      }
+    }
   }
 
   Widget getWidget({bool enabled}) {
