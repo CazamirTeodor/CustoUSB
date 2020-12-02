@@ -13,11 +13,11 @@ import './widgets/burn_button.dart';
 import './widgets/warning.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-    setWindowMinSize(const Size(350, 613));
-    setWindowMaxSize(const Size(350, 613));
-  }
+  // WidgetsFlutterBinding.ensureInitialized();
+  // if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+  //   setWindowMinSize(const Size(350, 613));
+  //   setWindowMaxSize(const Size(350, 613));
+  // }
   runApp(CustoUSB());
 }
 
@@ -33,30 +33,22 @@ class _CustoUSBState extends State<CustoUSB> {
   Stream<bool> burningStream;
 
   @override
-  void initState()
-  {
-    
+  void initState() {
     burningStream = config.burningController.stream;
     super.initState();
     burningStream.listen((event) {
-      setState((){
+      setState(() {
         burning = true;
       });
     });
-
   }
-
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "CustoUSB",
-        home: Scaffold(
-          body: !burning
-              ? ConfigPage()
-              : BurningPage()
-        ));
+        home: Scaffold(body: !burning ? ConfigPage() : BurningPage()));
   }
 }
 
@@ -73,7 +65,11 @@ class ConfigPage extends StatelessWidget {
         Divider(thickness: 0.5, color: Colors.black),
         LDAPSection(),
         Warning(),
-        Divider(thickness: 1, color: Colors.black, height: 0,),
+        Divider(
+          thickness: 1,
+          color: Colors.black,
+          height: 0,
+        ),
         BurnButton()
       ],
     );

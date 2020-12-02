@@ -58,7 +58,8 @@ class MySizeBar extends StatelessWidget {
     int to_return = 0;
     var drive = Configuration().drive;
 
-    var drives = Process.runSync("df", ["-m"]).stdout.toString().split("\n");
+    var drives =
+        Process.runSync("df", ["-m", "-P"]).stdout.toString().split("\n");
     drives.removeWhere((element) => !element.contains(new RegExp(r'/dev')));
 
     drives.forEach((element) {

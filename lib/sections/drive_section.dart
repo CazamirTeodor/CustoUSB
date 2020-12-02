@@ -31,27 +31,48 @@ class DriveSection extends StatelessWidget {
   }
 
   void getDrives() {
-    var temp = Process.runSync('df', []).stdout.toString().split("\n");
+    var temp = Process.runSync('df', ["-P"]).stdout.toString().split("\n");
 
     temp.removeWhere((element) => !element.contains(new RegExp(r'/dev')));
 
-    temp.forEach((element) {
-      element.trim();
-      var list = element.split(" ");
-      list.removeWhere((element) => element == "");
+    if (Platform.isLinux) {
+      temp.forEach((element) {
+        element.trim();
+        var list = element.split(" ");
+        list.removeWhere((element) => element == "");
 
-      if (list[8].startsWith("/Volumes/")) {
-        StringBuffer to_add = StringBuffer();
-        to_add.write(list[8].substring(9));
+        if (list[5].startsWith("/media/")) {
+          StringBuffer to_add = StringBuffer();
+          to_add.write(list[5].substring(list[5].lastIndexOf("/") + 1));
 
-        if (list.length > 9) {
-          for (int i = 9; i < list.length; i++) to_add.write(" " + list[i]);
+          if (list.length > 6) {
+            for (int i = 6; i < list.length; i++) to_add.write(" " + list[i]);
+          }
+
+          drives.add(to_add.toString());
+          return;
         }
+      });
+    }
 
-        drives.add(to_add.toString());
-        return;
-      }
-    });
+    // if (Platform.isMacOS) {
+    //   temp.forEach((element) {
+    //     element.trim();
+    //     var list = element.split(" ");
+    //     list.removeWhere((element) => element == "");
 
+    //     if (list[8].startsWith("/Volumes/")) {
+    //       StringBuffer to_add = StringBuffer();
+    //       to_add.write(list[8].substring(8));
+
+    //       if (list.length > 9) {
+    //         for (int i = 9; i < list.length; i++) to_add.write(" " + list[i]);
+    //       }
+
+    //       drives.add(to_add.toString());
+    //       return;
+    //     }
+    //   });
+    // }
   }
 }

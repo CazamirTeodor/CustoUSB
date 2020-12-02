@@ -87,6 +87,8 @@ class Configuration {
     if (ip.isEmpty) return false;
     if (domain == null) return false;
     if (domain.isEmpty) return false;
+    if (rootPassword == null) return false;
+    if (rootPassword.isEmpty) return false;
 
     return true;
   }
@@ -105,7 +107,7 @@ class Configuration {
   String getDriveByName(String driveName) {
     String to_return;
 
-    var temp = Process.runSync('df', []).stdout.toString().split("\n");
+    var temp = Process.runSync('df', ['-P']).stdout.toString().split("\n");
 
     temp.removeWhere((element) => !element.contains(new RegExp(r'/dev')));
 
@@ -114,12 +116,12 @@ class Configuration {
       var list = element.split(" ");
       list.removeWhere((element) => element == "");
 
-      if (list[8].startsWith("/Volumes/")) {
+      if (list[5].startsWith("/media/")) {
         StringBuffer to_add = StringBuffer();
-        to_add.write(list[8].substring(9));
+        to_add.write(list[5].substring(list[5].lastIndexOf("/") + 1));
 
-        if (list.length > 9) {
-          for (int i = 9; i < list.length; i++) to_add.write(" " + list[i]);
+        if (list.length > 6) {
+          for (int i = 6; i < list.length; i++) to_add.write(" " + list[i]);
         }
 
         if (to_add.toString() == driveName) to_return = list[0];
