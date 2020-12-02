@@ -74,8 +74,7 @@ class _SelectedBinariesState extends State<SelectedBinaries> {
                                     onPressed: () {
                                       print("Trying to delete ${e.name}.");
                                       config.updateParameter(
-                                          parameter: "binaries",
-                                          binaryName: e.name);
+                                          parameter: "binaries", binary: e);
                                     })),
                           )
                         ],

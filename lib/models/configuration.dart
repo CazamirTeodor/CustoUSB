@@ -31,7 +31,7 @@ class Configuration {
     return to_return;
   }
 
-  void updateParameter({String parameter, String value, String binaryName}) {
+  void updateParameter({String parameter, String value, BinaryWidget binary}) {
     switch (parameter) {
       case "drive":
         drive = getDriveByName(value);
@@ -47,13 +47,13 @@ class Configuration {
         architecture = value;
         break;
       case "binaries":
-        BinaryWidget binary = binaries.singleWhere((element) {
-          return element.name == binaryName;
+        BinaryWidget bin = binaries.singleWhere((element) {
+          return element.name == binary.name;
         }, orElse: () {
           return null;
         });
-        if (binary == null)
-          binaries.add(BinaryWidget(name: binaryName));
+        if (bin == null)
+          binaries.add(binary);
         else
           binaries.remove(binary);
         binariesController.add(binaries);

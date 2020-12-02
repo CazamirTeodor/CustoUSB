@@ -1,7 +1,6 @@
 import 'package:custo_usb/models/configuration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'dart:io';
 import '../constants.dart';
 import 'binary.dart';
@@ -15,7 +14,7 @@ class BinariesList extends StatefulWidget {
     String result =
         Process.runSync("apt-cache", ["search", "."]).stdout.toString();
     List<String> rows = result.split("\n");
-    rows.forEach((element) {
+    rows.getRange(0, 100).forEach((element) {
       List<String> row = element.split(" ");
       list.add(BinaryWidget(name: row[0]));
     });
@@ -26,13 +25,12 @@ class BinariesList extends StatefulWidget {
   _BinariesListState createState() => _BinariesListState();
 
   void getDimensions() {
-    List<int> to_return = List<int>();
-
-    list.forEach((element) {
+    for (int i = 0; i < list.length; i++) {
       var result = Process.runSync(
-              "apt-cache", ["--no-all-versions", "show", element.name])
+              "apt-cache", ["--no-all-versions", "show", list[i].name])
           .stdout
           .toString();
+
       List<String> rows = result.split("\n");
       rows.removeWhere((element) => !element.startsWith("Installed-Size:"));
       if (rows.length == 0) {
@@ -41,9 +39,9 @@ class BinariesList extends StatefulWidget {
       }
 
       List<String> row = rows[0].split(" ");
-      element.dimension = int.parse(row[1]);
-      print(element.name + " " + element.dimension.toString());
-    });
+      list[i].dimension = int.parse(row[1]);
+      print(list[i].name + " " + list[i].dimension.toString());
+    }
   }
 }
 
@@ -52,10 +50,11 @@ class _BinariesListState extends State<BinariesList> {
 
   @override
   Widget build(BuildContext context) {
-    widget.list = [];
     widget.list.sort((a, b) {
       return a.name.compareTo(b.name);
     });
+
+    print("Am intrat in createState, am ${widget.list.length} elemente.");
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

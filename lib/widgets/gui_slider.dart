@@ -34,9 +34,9 @@ class _GuiSliderState extends State<GuiSlider> {
         }),
         onValueChanged: (val) {
           var config = Configuration();
-          config.updateParameter(parameter: "binaries", binaryName: "gui1");
-          config.updateParameter(parameter: "binaries", binaryName: "gui2");
-          config.updateParameter(parameter: "binaries", binaryName: "gui3");
+          //config.updateParameter(parameter: "binaries", binaryName: "gui1");
+          //config.updateParameter(parameter: "binaries", binaryName: "gui2");
+          //config.updateParameter(parameter: "binaries", binaryName: "gui3");
 
           setState(() {
             oldIndex = val;
