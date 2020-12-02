@@ -6,7 +6,7 @@ import '../models/configuration.dart';
 
 class BinaryWidget extends StatefulWidget {
   String name;
-  int dimension;
+  double dimension;
 
   BinaryWidget({this.name});
 

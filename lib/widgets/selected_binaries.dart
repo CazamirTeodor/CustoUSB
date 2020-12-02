@@ -30,8 +30,8 @@ class _SelectedBinariesState extends State<SelectedBinaries> {
 
   @override
   Widget build(BuildContext context) {
-    if (config.binaries != null)
-      config.binaries.sort((a, b) {
+    if (config.selectedBinaries != null)
+      config.selectedBinaries.sort((a, b) {
         return a.name.compareTo(b.name);
       });
     return Column(
@@ -49,7 +49,7 @@ class _SelectedBinariesState extends State<SelectedBinaries> {
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: Colors.black)),
             child: ListView(
-              children: config.binaries
+              children: config.selectedBinaries
                   .map((e) => Center(
                           child: Stack(
                         children: [

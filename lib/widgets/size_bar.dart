@@ -4,8 +4,8 @@ import '../widgets/binary.dart';
 import 'dart:io';
 
 class MySizeBar extends StatefulWidget {
-  int binariesSize = 0;
-  int maxDriveSize;
+  double binariesSize = 0;
+  double maxDriveSize;
 
   Stream<List<BinaryWidget>> binariesStream;
 
@@ -19,8 +19,8 @@ class MySizeBar extends StatefulWidget {
   @override
   _MySizeBarState createState() => _MySizeBarState();
 
-  int getDriveSize() {
-    int to_return = 0;
+  double getDriveSize() {
+    double to_return = 0;
     var drive = Configuration().drive;
 
     var drives =
@@ -32,7 +32,7 @@ class MySizeBar extends StatefulWidget {
       var list = element.split(" ");
       list.removeWhere((element) => element == "");
       if (list[0] == drive) {
-        to_return = int.parse(list[1]);
+        to_return = double.parse(list[1]);
         return;
       }
     });
@@ -42,7 +42,7 @@ class MySizeBar extends StatefulWidget {
 
   void updateBinariesSize() {
     var config = Configuration();
-    config.binaries.forEach((element) {
+    config.selectedBinaries.forEach((element) {
       binariesSize += element.dimension;
     });
     maxDriveSize = getDriveSize();
@@ -85,7 +85,7 @@ class _MySizeBarState extends State<MySizeBar> {
       margin: EdgeInsets.only(top: 5),
       child: Center(
           child: Text(
-        "${(driveSize + widget.binariesSize)} MB | ${widget.maxDriveSize} MB",
+        "${(driveSize + widget.binariesSize).toStringAsFixed(2)} MB | ${widget.maxDriveSize.toStringAsFixed(2)} MB",
         style: TextStyle(fontSize: 10),
       )),
       decoration: BoxDecoration(

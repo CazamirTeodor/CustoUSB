@@ -14,7 +14,7 @@ class BinariesList extends StatefulWidget {
     String result =
         Process.runSync("apt-cache", ["search", "."]).stdout.toString();
     List<String> rows = result.split("\n");
-    rows.getRange(0, 100).forEach((element) {
+    rows.getRange(0, 500).forEach((element) {
       List<String> row = element.split(" ");
       list.add(BinaryWidget(name: row[0]));
     });
@@ -39,7 +39,8 @@ class BinariesList extends StatefulWidget {
       }
 
       List<String> row = rows[0].split(" ");
-      list[i].dimension = int.parse(row[1]);
+
+      list[i].dimension = kbToMb(double.parse(row[1]));
       print(list[i].name + " " + list[i].dimension.toString());
     }
   }
@@ -54,7 +55,6 @@ class _BinariesListState extends State<BinariesList> {
       return a.name.compareTo(b.name);
     });
 
-    print("Am intrat in createState, am ${widget.list.length} elemente.");
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -106,4 +106,8 @@ class _BinariesListState extends State<BinariesList> {
       ],
     );
   }
+}
+
+double kbToMb(double kb) {
+  return kb * (1 / 1024);
 }

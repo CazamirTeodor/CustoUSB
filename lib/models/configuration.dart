@@ -4,11 +4,12 @@ import '../widgets/binary.dart';
 
 class Configuration {
   String drive, distro, version, architecture;
-  List<BinaryWidget> binaries = new List<BinaryWidget>();
+  List<BinaryWidget> selectedBinaries = new List<BinaryWidget>();
   String ip, domain;
   String rootPassword;
 
   bool configured = false;
+  List<BinaryWidget> allBinaries = new List<BinaryWidget>();
 
   StreamController<String> driveController = StreamController<String>();
   StreamController<bool> burningController = StreamController<bool>();
@@ -47,16 +48,16 @@ class Configuration {
         architecture = value;
         break;
       case "binaries":
-        BinaryWidget bin = binaries.singleWhere((element) {
+        BinaryWidget bin = selectedBinaries.singleWhere((element) {
           return element.name == binary.name;
         }, orElse: () {
           return null;
         });
         if (bin == null)
-          binaries.add(binary);
+          selectedBinaries.add(binary);
         else
-          binaries.remove(binary);
-        binariesController.add(binaries);
+          selectedBinaries.remove(binary);
+        binariesController.add(selectedBinaries);
         break;
       case "ip":
         ip = value;
@@ -96,7 +97,7 @@ class Configuration {
     print("Distro: ${distro}");
     print("Version: ${version}");
     print("Architecture: ${architecture}");
-    print("Binaries: ${binaries}");
+    print("Binaries: ${selectedBinaries}");
     print("Ip: ${ip}");
     print("Domain: ${domain}");
     print("Root password: ${rootPassword}");
