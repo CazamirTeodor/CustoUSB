@@ -150,24 +150,39 @@ class Configuration {
   }
 
   void getDimensions() {
-    
-    for (int i = 0; i < allBinaries.length; i++) {
-      var result = Process.runSync(
-              "apt-cache", ["--no-all-versions", "show", allBinaries[i].name])
+    int range = 1;
+    StringBuffer buffer = StringBuffer();
+    int index = 1;
+
+    while(allBinaries.length - index > range)
+    {
+      allBinaries.getRange(index, index + range).forEach((element) {
+        buffer.write(element.name + " ");
+      });
+
+      print(buffer.toString());
+       var result = Process.runSync(
+              "apt-cache", ["--no-all-versions", "show", buffer.toString()])
           .stdout
           .toString();
+      print(result);
 
       List<String> rows = result.split("\n");
-      rows.removeWhere((element) => !element.startsWith("Installed-Size:"));
-      if (rows.length == 0) {
-        rows = result.split("\n");
-        rows.removeWhere((element) => !element.startsWith("Size:"));
+      //print(rows);
+      rows.removeWhere((element){
+        return !(element.startsWith("Installed-Size"));
+      });
+      print(rows.length);
+      List<String> row;
+      for(int i=0; i < rows.length; i++)
+      {
+        row = rows[i].split(" ");
+        allBinaries[index + i].dimension = (double.parse(row[1]))*(1/1024);
+        print(allBinaries[index + i].name + " " + allBinaries[index +i].dimension.toString());
       }
-
-      List<String> row = rows[0].split(" ");
-
-      allBinaries[i].dimension = (double.parse(row[1]))*(1/1024); // parse and convert to MB
-      print(allBinaries[i].name + " " + allBinaries[i].dimension.toString());
+      print("Am ${rows.length} randuri.");
+      index+=rows.length;
+      buffer.clear();
     }
   }
 }
