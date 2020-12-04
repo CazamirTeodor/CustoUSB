@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/teodorcazamir/flutter
-FLUTTER_APPLICATION_PATH=/Users/teodorcazamir/Desktop/custo_usb
+FLUTTER_ROOT=/home/ubuntu/snap/flutter/common/flutter
+FLUTTER_APPLICATION_PATH=/home/ubuntu/custo_usb
 FLUTTER_TARGET=lib/main.dart
 FLUTTER_BUILD_DIR=build
 SYMROOT=${SOURCE_ROOT}/../build/ios

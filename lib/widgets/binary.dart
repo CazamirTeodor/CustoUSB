@@ -1,12 +1,13 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import '../constants.dart';
 import '../models/configuration.dart';
 
 class BinaryWidget extends StatefulWidget {
   String name;
   double dimension;
+
+  Stream<List<BinaryWidget>> selectedBinariesStream;
 
   BinaryWidget({this.name});
 
@@ -17,7 +18,28 @@ class BinaryWidget extends StatefulWidget {
 class _BinaryWidgetState extends State<BinaryWidget> {
   bool status = false;
   var config = Configuration();
+  
 
+  @override
+  void initState()
+  {
+    widget.selectedBinariesStream = config.binariesController.stream;
+    super.initState();
+    widget.selectedBinariesStream.listen((list) {
+      if(list.contains(this.widget))
+      {
+        setState(() {
+          status = true;
+        });
+      }
+      else
+      {
+        setState(() {
+          status = false;
+        });
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Tooltip(

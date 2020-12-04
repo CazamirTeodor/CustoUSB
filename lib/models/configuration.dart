@@ -14,16 +14,19 @@ class Configuration {
   StreamController<String> driveController = StreamController<String>();
   StreamController<bool> burningController = StreamController<bool>();
   StreamController<bool> configuredController = StreamController<bool>();
-  StreamController<List<BinaryWidget>> binariesController =
-      StreamController<List<BinaryWidget>>.broadcast();
+  StreamController<List<BinaryWidget>> binariesController = StreamController<List<BinaryWidget>>.broadcast();
 
   static final Configuration _instance = Configuration._internal();
+
 
   factory Configuration() {
     return _instance;
   }
 
-  Configuration._internal();
+  Configuration._internal()
+  {
+    fetchBinaries();  // fetches all available apt packages
+  }
 
   String burn() {
     burningController.add(true);
@@ -128,5 +131,43 @@ class Configuration {
       }
     });
     return to_return;
+  }
+
+  void fetchBinaries() {
+    String result =
+        Process.runSync("apt-cache", ["search", "."]).stdout.toString();
+    List<String> rows = result.split("\n");
+    rows.forEach((element) {
+      List<String> row = element.split(" ");
+      allBinaries.add(BinaryWidget(name: row[0]));
+    });
+
+    allBinaries.sort((a, b) {
+      return a.name.compareTo(b.name);
+    });
+
+    getDimensions();
+  }
+
+  void getDimensions() {
+    
+    for (int i = 0; i < allBinaries.length; i++) {
+      var result = Process.runSync(
+              "apt-cache", ["--no-all-versions", "show", allBinaries[i].name])
+          .stdout
+          .toString();
+
+      List<String> rows = result.split("\n");
+      rows.removeWhere((element) => !element.startsWith("Installed-Size:"));
+      if (rows.length == 0) {
+        rows = result.split("\n");
+        rows.removeWhere((element) => !element.startsWith("Size:"));
+      }
+
+      List<String> row = rows[0].split(" ");
+
+      allBinaries[i].dimension = (double.parse(row[1]))*(1/1024); // parse and convert to MB
+      print(allBinaries[i].name + " " + allBinaries[i].dimension.toString());
+    }
   }
 }
