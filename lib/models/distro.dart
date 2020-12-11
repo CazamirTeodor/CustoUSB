@@ -13,7 +13,6 @@ class Distro {
       @required this.link});
 
   factory Distro.fromJson(Map<String, dynamic> json) {
-    print(json);
     var versions_from_json = json['versions'];
     List<String> vers = new List<String>.from(versions_from_json);
 
@@ -21,9 +20,6 @@ class Distro {
     List<String> archs = new List<String>.from(arch_from_json);
 
     return Distro(
-        name: json['name'],
-        versions: vers,
-        archs: archs,
-        link: json['link']);
+        name: json['name'], versions: vers, archs: archs, link: json['link']);
   }
 }

@@ -14,18 +14,17 @@ class Configuration {
   StreamController<String> driveController = StreamController<String>();
   StreamController<bool> burningController = StreamController<bool>();
   StreamController<bool> configuredController = StreamController<bool>();
-  StreamController<List<BinaryWidget>> binariesController = StreamController<List<BinaryWidget>>.broadcast();
+  StreamController<List<BinaryWidget>> binariesController =
+      StreamController<List<BinaryWidget>>.broadcast();
 
   static final Configuration _instance = Configuration._internal();
-
 
   factory Configuration() {
     return _instance;
   }
 
-  Configuration._internal()
-  {
-    fetchBinaries();  // fetches all available apt packages
+  Configuration._internal() {
+    fetchBinaries(); // fetches all available apt packages
   }
 
   String burn() {
@@ -150,39 +149,34 @@ class Configuration {
   }
 
   void getDimensions() {
-    int range = 1;
-    StringBuffer buffer = StringBuffer();
-    int index = 1;
+    print(Process.runSync("/home/ubuntu/custo_usb/assets/aplicatii_1.sh", [])
+        .stdout);
+    print(Process.runSync("/home/ubuntu/custo_usb/assets/bootstrap_2.sh",
+        ["amd64", "buster", " http://ubuntu.osuosl.org/ubuntu/"]).stdout);
 
-    while(allBinaries.length - index > range)
-    {
-      allBinaries.getRange(index, index + range).forEach((element) {
-        buffer.write(element.name + " ");
+    List<String> args = [];
+
+    args.add("--no-all-versions");
+    args.add("show");
+
+    allBinaries
+      ..forEach((element) {
+        args.add(element.name);
       });
 
-      print(buffer.toString());
-       var result = Process.runSync(
-              "apt-cache", ["--no-all-versions", "show", buffer.toString()])
-          .stdout
-          .toString();
-      print(result);
+    var result = Process.runSync("apt-cache", args).stdout.toString();
 
-      List<String> rows = result.split("\n");
-      //print(rows);
-      rows.removeWhere((element){
-        return !(element.startsWith("Installed-Size"));
-      });
-      print(rows.length);
-      List<String> row;
-      for(int i=0; i < rows.length; i++)
-      {
-        row = rows[i].split(" ");
-        allBinaries[index + i].dimension = (double.parse(row[1]))*(1/1024);
-        print(allBinaries[index + i].name + " " + allBinaries[index +i].dimension.toString());
-      }
-      print("Am ${rows.length} randuri.");
-      index+=rows.length;
-      buffer.clear();
+    List<String> rows = result.split("\n");
+
+    rows.removeWhere((element) {
+      return !(element.startsWith("Installed-Size"));
+    });
+
+    List<String> row;
+    for (int i = 0; i < rows.length; i++) {
+      row = rows[i].split(" ");
+      allBinaries[i].dimension = (double.parse(row[1])) * (1 / 1024);
     }
+    print("Am ${rows.length} randuri.");
   }
 }
