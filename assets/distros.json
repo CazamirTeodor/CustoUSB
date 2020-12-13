@@ -3,44 +3,43 @@
 		{
 			"name": "Ubuntu",
 			"versions": [
-				"Bionic",
-				"Devel",
-				"Eoan",
-				"Focal",
-				"Groovy",
-				"Precise",
-				"Trusty",
-				"Xenial"
+				"bionic",
+				"devel",
+				"eoan",
+				"focal",
+				"groovy",
+				"precise",
+				"trusty",
+				"xenial"
 			],
 			"archs" : [
 				"i386",
-				"AMD64",
-				"ARM64"
+				"amd64"
 			],
-			"link": "http://ftp.us.ubuntu.org/ubuntu/"
+			"link": "http://ubuntu.osuosl.org/ubuntu/"
 		},
 		{
 			"name": "Debian",
 			"versions": [
-				"Debian 8.11",
-				"Debian 9.13",
-				"Debian 10.6",
-				"Bullseye",
+				"Debian8.11",
+				"Debian9.13",
+				"Debian10.6",
+				"bullseye",
 				"buster",
-				"Jessie"
+				"jessie"
 			],
 			"archs" : [
 				"i386",
 				"amd64",
-				"ARM64",
-				"ARMel",
-				"ARMhf",
-				"MIPSel",
-				"MIPS64el",
-				"PPC64el",
-				"S390x"
+				"arm64",
+				"armel",
+				"armhf",
+				"mipsel",
+				"mips64el",
+				"ppc64el",
+				"s390x"
 			],
-			"link": "http://ftp.us.debian.org/debian/"
+			"link": "http://debian.osuosl.org/debian/"
 		}
 	]
 }
