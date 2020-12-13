@@ -48,7 +48,7 @@ class _CustoUSBState extends State<CustoUSB> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "CustoUSB",
-        home: Scaffold(body: !burning ? ConfigPage() : BurningPage()));
+        home: Scaffold(body: burning ? ConfigPage() : BurningPage()));
   }
 }
 
@@ -77,18 +77,33 @@ class ConfigPage extends StatelessWidget {
 }
 
 class BurningPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  StreamController<double> progressController = StreamController<double>();
+  BurningPage() {
     burnFunction();
-    return MyProgressBar(); // StreamController
   }
 
-  void burnFunction() {
+  @override
+  Widget build(BuildContext context) {
+    return MyProgressBar(stream: progressController.stream); // StreamController
+  }
+
+  Future<void> burnFunction() async {
+    print("Started burning...");
     // clone all scripts
 
     // find scripts -type f -exec chmod +x {} \;
 
-    Process.runSync("./scripts/aplicatii_1.sh", []);
-    print("Am executat primul script!");
+    await Process.run("sleep", ["2"]);
+    print("Au trecut 2 sec");
+    progressController.add(3);
+    await Process.run("sleep", ["3"]);
+    print("Au trecut 2 sec");
+    progressController.add(15);
+    await Process.run("sleep", ["3"]);
+    print("Au trecut 2 sec");
+    progressController.add(90);
+    await Process.run("sleep", ["3"]);
+    print("Au trecut 2 sec");
+    progressController.add(100);
   }
 }

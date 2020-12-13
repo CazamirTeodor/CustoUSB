@@ -48,10 +48,7 @@ class _BurnButtonState extends State<BurnButton> {
         onPressed: () {
           widget.configuration.printStats();
           if (widget.configuration.configured)
-          {
             widget.configuration.burningController.add(true);
-            print("Started burning..");
-          }
         },
         splashColor: Colors.transparent,
       ),

@@ -2,13 +2,29 @@ import 'package:custo_usb/constants.dart';
 import 'package:flutter/material.dart';
 
 class MyProgressBar extends StatefulWidget {
+  Stream<double> stream;
+  double maxHeight = 585;
+
+  MyProgressBar({this.stream});
+
   @override
   State<MyProgressBar> createState() => _MyProgressBarState();
 }
 
 class _MyProgressBarState extends State<MyProgressBar> {
-  double height = 10;
+  double progress = 0;
   bool full = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.stream.listen((newProgress) {
+      setState(() {
+        if (newProgress == 100) full = true;
+        progress = newProgress;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +40,9 @@ class _MyProgressBarState extends State<MyProgressBar> {
                 alignment: Alignment.bottomCenter,
                 color: Colors.green,
                 width: double.infinity,
-                height: height,
-                duration: Duration(seconds: 5),
-                child: FlatButton(
-                  color: Colors.transparent,
-                  onPressed: increaseProgressBar,
-                  child: Text(" "),
-                ),
+                height: widget.maxHeight * (progress / 100),
+                duration: Duration(seconds: 1),
+                child: null,
               ),
             ],
           ),
@@ -42,14 +54,24 @@ class _MyProgressBarState extends State<MyProgressBar> {
                 children: [
                   AnimatedOpacity(
                     child: Center(
-                      child: Text(
-                        "BURNING...",
-                        style: TextStyle(
-                          letterSpacing: 10,
-                          fontFamily: 'Avenir',
-                          fontWeight: FontWeight.w800,
-                          fontSize: 30,
-                        ),
+                      child: Column(
+                        children: [
+                          Text(
+                            "BURNING...",
+                            style: TextStyle(
+                              letterSpacing: 10,
+                              fontFamily: 'Avenir',
+                              fontWeight: FontWeight.w800,
+                              fontSize: 30,
+                            ),
+                          ),
+                          Text(
+                            "${progress.floor()} %",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500),
+                          )
+                        ],
                       ),
                     ),
                     opacity: !full ? 1 : 0,
@@ -88,17 +110,5 @@ class _MyProgressBarState extends State<MyProgressBar> {
         ],
       ),
     );
-  }
-
-  void increaseProgressBar() {
-    if (height < 613) {
-      setState(() {
-        height += 613;
-      });
-      return;
-    }
-    setState(() {
-      full = true;
-    });
   }
 }

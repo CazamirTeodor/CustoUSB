@@ -26,7 +26,7 @@ class Configuration {
   }
 
   Configuration._internal() {
-    fetchBinaries(); // fetches all available apt packages
+    //fetchBinaries(); // fetches all available apt packages
   }
 
   String burn() {
