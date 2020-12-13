@@ -1,8 +1,9 @@
 #!/bin/bash
 
 #-------------------------
-#linux-image-amd64
-#linux-image-4.15.0-1006-gcp pentru bionic
+# 2 arguments 
+#linux-image-amd64 			for debian buster
+#linux-image-generic:amd64 	for ubuntu focal
 #-------------------------
 
 if [ $# -eq 0 ]
@@ -18,7 +19,10 @@ else
 
 	echo "#!/bin/bash
 
-	apt-get update && apt-get install --no-install-recommends $1 -y live-boot systemd-sysv" >> executa.sh
+	apt-get install -y software-properties-common
+	add-apt-repository universe
+	apt-get update
+	apt-get install --no-install-recommends $1 -y live-boot systemd-sysv" >> executa.sh
 
 	chmod +x executa.sh
 	cat executa.sh

@@ -1,10 +1,12 @@
 #!/bin/bash
 
 #-------------------------
+	# aruments = list of packets
 
-	##network-manager net-tools wireless-tools wpagui curl openssh-server openssh-client blackbox xserver-xorg-core xserver-xorg xinit xterm screenfetch screen lxterminal vim gedit nano lxde wget sudo gnupg gnupg2
-	##kde-plasma-desktop
-	#network-manager net-tools wireless-tools wpagui curl openssh-server openssh-client blackbox xserver-xorg-core xserver-xorg xinit xterm screenfetch screen lxterminal gedit lxde 
+	##slim -> interface for ubuntu
+	##lxde -> interface for debian
+
+	#network-manager net-tools wireless-tools wpagui curl openssh-server openssh-client blackbox xserver-xorg-core xserver-xorg xinit xterm screenfetch screen lxterminal gedit
 #-------------------------
 
 

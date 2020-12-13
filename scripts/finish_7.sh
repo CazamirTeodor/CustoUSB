@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+# 0 arguments
 
 mkdir -p LIVE_BOOT/{staging/{EFI/boot,boot/grub/x86_64-efi,isolinux,live},tmp}
 

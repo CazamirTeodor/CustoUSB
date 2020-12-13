@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import '../widgets/binary.dart';
 
+import 'package:process_run/shell.dart';
+
 class Configuration {
   String drive, distro, version, architecture;
   List<BinaryWidget> selectedBinaries = new List<BinaryWidget>();
@@ -149,11 +151,6 @@ class Configuration {
   }
 
   void getDimensions() {
-    print(Process.runSync("/home/ubuntu/custo_usb/assets/aplicatii_1.sh", [])
-        .stdout);
-    print(Process.runSync("/home/ubuntu/custo_usb/assets/bootstrap_2.sh",
-        ["amd64", "buster", " http://ubuntu.osuosl.org/ubuntu/"]).stdout);
-
     List<String> args = [];
 
     args.add("--no-all-versions");

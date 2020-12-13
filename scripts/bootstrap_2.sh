@@ -1,6 +1,9 @@
 #!/bin/bash
 
+
+
 #-------------------------
+# 3 arguments 
 # amd64		focal 	http://ubuntu.osuosl.org/ubuntu/  
 # amd64 	buster 	http://debian.osuosl.org/debian/
 #-------------------------

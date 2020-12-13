@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:window_size/window_size.dart';
+//import 'package:window_size/window_size.dart';
 
 import './sections/drive_section.dart';
 import './sections/specs_section.dart';
@@ -77,12 +77,18 @@ class ConfigPage extends StatelessWidget {
 }
 
 class BurningPage extends StatelessWidget {
-  //String script;
-
-  //BurningPage({this.script});
-
   @override
   Widget build(BuildContext context) {
-    return MyProgressBar();
+    burnFunction();
+    return MyProgressBar(); // StreamController
+  }
+
+  void burnFunction() {
+    // clone all scripts
+
+    // find scripts -type f -exec chmod +x {} \;
+
+    Process.runSync("./scripts/aplicatii_1.sh", []);
+    print("Am executat primul script!");
   }
 }

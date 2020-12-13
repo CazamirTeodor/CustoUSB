@@ -26,11 +26,12 @@ class _MyDropdownButtonState extends State<MyDropdownButton> {
   @override
   Widget build(BuildContext context) {
     widget.options.singleWhere((element) {
-          return element == selectedOption;
-        },orElse: () {
-          selectedOption = null;
-          widget.configuration.updateParameter(parameter: widget.updateParameter, value: "");
-        });
+      return element == selectedOption;
+    }, orElse: () {
+      selectedOption = null;
+      widget.configuration
+          .updateParameter(parameter: widget.updateParameter, value: "");
+    });
 
     return Container(
       width: 100,
