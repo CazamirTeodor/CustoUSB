@@ -5,7 +5,7 @@ import '../widgets/binary.dart';
 import 'package:process_run/shell.dart';
 
 class Configuration {
-  String drive, distro, version, architecture;
+  String drive, distro, version, architecture, link;
   List<BinaryWidget> selectedBinaries = new List<BinaryWidget>();
   String ip, domain;
   String rootPassword;
@@ -51,6 +51,9 @@ class Configuration {
       case "architecture":
         architecture = value;
         break;
+      case "link":
+        link = value;
+        break;
       case "binaries":
         BinaryWidget bin = selectedBinaries.singleWhere((element) {
           return element.name == binary.name;
@@ -86,6 +89,8 @@ class Configuration {
     if (version.isEmpty) return false;
     if (architecture == null) return false;
     if (architecture.isEmpty) return false;
+    if (link == null) return false;
+    if (link.isEmpty) return false;
     if (ip == null) return false;
     if (ip.isEmpty) return false;
     if (domain == null) return false;
@@ -97,14 +102,15 @@ class Configuration {
   }
 
   void printStats() {
-    print("Drive: ${drive}");
-    print("Distro: ${distro}");
-    print("Version: ${version}");
-    print("Architecture: ${architecture}");
-    print("Binaries: ${selectedBinaries}");
-    print("Ip: ${ip}");
-    print("Domain: ${domain}");
-    print("Root password: ${rootPassword}");
+    print("Drive: $drive");
+    print("Distro: $distro");
+    print("Version: $version");
+    print("Architecture: $architecture");
+    print("Binaries: $selectedBinaries");
+    print("Link: $link");
+    print("Ip: $ip");
+    print("Domain: $domain");
+    print("Root password: $rootPassword");
   }
 
   String getDriveByName(String driveName) {

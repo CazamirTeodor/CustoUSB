@@ -1,3 +1,4 @@
+import 'package:custo_usb/models/configuration.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -88,6 +89,7 @@ class _SpecsSectionState extends State<SpecsSection> {
     setState(() {
       this.currentDistro =
           distros.singleWhere((element) => element.name == currentDistro);
+      Configuration().link = this.currentDistro.link;
     });
   }
 }

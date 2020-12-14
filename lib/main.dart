@@ -88,22 +88,36 @@ class BurningPage extends StatelessWidget {
   }
 
   Future<void> burnFunction() async {
+    List<String> scripts = [
+      "aplicatii_1.sh",
+      "bootstrap_2.sh",
+      "chroot_3.sh",
+      "install_4.sh",
+      "ldap_setup_5.sh",
+      "password_6.sh",
+      "finish_7.sh",
+      "burn_8.sh"
+    ];
+
     print("Started burning...");
     // clone all scripts
+    String link_template =
+        "https://raw.githubusercontent.com/CazamirTeodor/custo_usb/Linux/scripts/";
 
-    // find scripts -type f -exec chmod +x {} \;
+    scripts.forEach((element) async {
+      await Process.run("curl", ["$link_template$element", "-O"])
+          .then((_) => Process.run("chmod", ["+x", "$element"]));
+    });
 
-    await Process.run("sleep", ["2"]);
-    print("Au trecut 2 sec");
-    progressController.add(3);
-    await Process.run("sleep", ["3"]);
-    print("Au trecut 2 sec");
-    progressController.add(15);
-    await Process.run("sleep", ["3"]);
-    print("Au trecut 2 sec");
-    progressController.add(90);
-    await Process.run("sleep", ["3"]);
-    print("Au trecut 2 sec");
-    progressController.add(100);
+    print("Scripts fetched");
+
+    await Process.run("./aplicatii_1.sh", [])
+        .then((value) {
+          print(value.stdout);
+          print(value.stderr);
+          progressController.add(10);
+          });
+    
+    await Process.run("rm", scripts);
   }
 }

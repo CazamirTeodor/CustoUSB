@@ -2,8 +2,8 @@ import 'package:custo_usb/constants.dart';
 import 'package:flutter/material.dart';
 
 class MyProgressBar extends StatefulWidget {
-  Stream<double> stream;
-  double maxHeight = 585;
+  final Stream<double> stream;
+  final double maxHeight = 585;
 
   MyProgressBar({this.stream});
 
