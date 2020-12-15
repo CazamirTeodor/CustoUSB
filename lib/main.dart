@@ -48,7 +48,7 @@ class _CustoUSBState extends State<CustoUSB> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "CustoUSB",
-        home: Scaffold(body: burning ? ConfigPage() : BurningPage()));
+        home: Scaffold(body: !burning ? ConfigPage() : BurningPage()));
   }
 }
 
@@ -111,13 +111,32 @@ class BurningPage extends StatelessWidget {
 
     print("Scripts fetched");
 
-    await Process.run("./aplicatii_1.sh", [])
-        .then((value) {
-          print(value.stdout);
-          print(value.stderr);
-          progressController.add(10);
-          });
-    
-    await Process.run("rm", scripts);
+    Process.run("./aplicatii_1.sh", []).then((value) {
+      print(value.stdout);
+      print(value.stderr);
+      progressController.add(10);
+    });
+
+    Process.run("./bootstrap_2.sh", [
+      Configuration().architecture,
+      Configuration().version,
+      Configuration().link
+    ]).then((value) {
+      print(value.stdout);
+      print(value.stderr);
+      progressController.add(30);
+    });
+
+    Process.run("./chroot_3.sh", [
+      Configuration().distro != "Ubuntu"
+          ? "linux-image-generic:${Configuration().architecture}"
+          : "linux-image-${Configuration().architecture}"
+    ]).then((value) {
+      print(value.stdout);
+      print(value.stderr);
+      progressController.add(50);
+    });
+
+    Process.run("rm", scripts);
   }
 }

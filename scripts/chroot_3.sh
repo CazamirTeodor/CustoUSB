@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #-------------------------
-# 2 arguments 
+# 1 argument
 #linux-image-amd64 			for debian buster
 #linux-image-generic:amd64 	for ubuntu focal
 #-------------------------
@@ -24,13 +24,13 @@ else
 	apt-get update
 	apt-get install --no-install-recommends $1 -y live-boot systemd-sysv" >> executa.sh
 
-	chmod +x executa.sh
+	sudo chmod +x executa.sh
 	cat executa.sh
-	mv executa.sh LIVE_BOOT/chroot
+	sudo mv executa.sh LIVE_BOOT/chroot
 	
 	
-	chroot LIVE_BOOT/chroot bash -c /executa.sh $1
-	rm LIVE_BOOT/chroot/executa.sh
+	sudo chroot LIVE_BOOT/chroot bash -c /executa.sh $1
+	sudo rm LIVE_BOOT/chroot/executa.sh
 
 fi
 

@@ -26,7 +26,7 @@ class Configuration {
   }
 
   Configuration._internal() {
-    //fetchBinaries(); // fetches all available apt packages
+    fetchBinaries(); // fetches all available apt packages
   }
 
   String burn() {
@@ -180,6 +180,6 @@ class Configuration {
       row = rows[i].split(" ");
       allBinaries[i].dimension = (double.parse(row[1])) * (1 / 1024);
     }
-    print("Am ${rows.length} randuri.");
+    print("I have ${rows.length} binaries.");
   }
 }

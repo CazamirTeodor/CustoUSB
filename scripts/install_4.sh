@@ -32,12 +32,12 @@ else
 	" >> executa.sh
 
 
-	chmod +x executa.sh
+	sudo chmod +x executa.sh
 	cat executa.sh 
-	mv executa.sh set.txt LIVE_BOOT/chroot
+	sudo mv executa.sh set.txt LIVE_BOOT/chroot
 	
 
-	chroot LIVE_BOOT/chroot bash -c /executa.sh $1
+	sudo chroot LIVE_BOOT/chroot bash -c /executa.sh $1
 
 
 fi
