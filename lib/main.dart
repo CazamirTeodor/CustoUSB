@@ -108,71 +108,62 @@ class BurningPage extends StatelessWidget {
       await Process.run("curl", ["$link_template$element", "-O"]).then((_) {
         print("Scripts fetched");
         Process.runSync("chmod", ["+x", "$element"]);
-
-        var result = Process.runSync("./aplicatii_1.sh", []);
-        print(result.stdout + result.stderr);
-        if (result.exitCode == 0) {
-          progressController.add(10);
-          result = Process.runSync("./bootstrap_2.sh", [
-            Configuration().architecture,
-            Configuration().version,
-            Configuration().link
-          ]);
-          print(result.stdout + result.stderr);
-          if (result.exitCode == 0) {
-            progressController.add(30);
-            result = Process.runSync("./chroot_3.sh", [
-              Configuration().distro != "Ubuntu"
-                  ? "linux-image-generic:${Configuration().architecture}"
-                  : "linux-image-${Configuration().architecture}"
-            ]);
-            print(result.stdout + result.stderr);
-            if (result.exitCode == 0) {
-              progressController.add(50);
-              result = Process.runSync("./install_4.sh",
-                  Configuration().selectedBinaries.map((e) => e.name).toList());
-              print(result.stdout + result.stderr);
-
-              if (result.exitCode == 0) {
-                progressController.add(70);
-                result = Process.runSync("./ldap_setup_5.sh",
-                    [Configuration().ip, Configuration().domain]);
-                print(result.stdout + result.stderr);
-
-                if (result.exitCode == 0) {
-                  progressController.add(75);
-                  result = Process.runSync(
-                      "./password_6.sh", [Configuration().rootPassword]);
-                  print(result.stdout + result.stderr);
-
-                  if (result.exitCode == 0) {
-                    progressController.add(80);
-                    result = Process.runSync("./finish_7.sh", []);
-                    print(result.stdout + result.stderr);
-
-                    if (result.exitCode == 0) {
-                      progressController.add(85);
-                      result = Process.runSync(
-                          "./burn_8.sh", [Configuration().drive]);
-                      print(result.stdout + result.stderr);
-
-                      if (result.exitCode == 0) {
-                        progressController.add(100);
-                        Process.runSync("rm", scripts);
-                        Process.runSync("rm", ["-rf", "LIVE_BOOT", "ldap_setup_client"]);
-                        Process.runSync("rm", ["ldap_setup_client.tar.gz", "executa.sh"]);
-                        print("Done!");
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
       });
     });
 
-    
+    var result = Process.runSync("./aplicatii_1.sh", []);
+    print(result.stdout + result.stderr);
+    if (result.exitCode == 0) {
+      progressController.add(10);
+      result = Process.runSync("./bootstrap_2.sh", [
+        Configuration().architecture,
+        Configuration().version,
+        Configuration().link
+      ]);
+      print(result.stdout + result.stderr);
+
+      progressController.add(30);
+      result = Process.runSync("./chroot_3.sh", [
+        Configuration().distro != "Ubuntu"
+            ? "linux-image-generic:${Configuration().architecture}"
+            : "linux-image-${Configuration().architecture}"
+      ]);
+      print(result.stdout + result.stderr);
+
+      progressController.add(50);
+      result = Process.runSync("./install_4.sh",
+          Configuration().selectedBinaries.map((e) => e.name).toList());
+      print(result.stdout + result.stderr);
+      print(result.exitCode);
+
+      progressController.add(70);
+      result = Process.runSync(
+          "./ldap_setup_5.sh", [Configuration().ip, Configuration().domain]);
+      print(result.stdout + result.stderr);
+      print(result.exitCode);
+
+      progressController.add(75);
+      result =
+          Process.runSync("./password_6.sh", [Configuration().rootPassword]);
+      print(result.stdout + result.stderr);
+      print(result.exitCode);
+
+      progressController.add(80);
+      result = Process.runSync("./finish_7.sh", []);
+      print(result.stdout + result.stderr);
+      print(result.exitCode);
+
+      progressController.add(85);
+      result = Process.runSync("./burn_8.sh", [Configuration().drive]);
+      print(result.stdout + result.stderr);
+      print(result.exitCode);
+
+      progressController.add(100);
+      Process.runSync("rm", scripts);
+      Process.runSync("rm", ["-rf", "LIVE_BOOT", "ldap_setup_client"]);
+      Process.runSync("rm", ["ldap_setup_client.tar.gz", "executa.sh"]);
+      print(result.exitCode);
+      print("Done!");
+    }
   }
 }
