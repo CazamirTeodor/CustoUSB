@@ -106,7 +106,10 @@ class Configuration {
     print("Distro: $distro");
     print("Version: $version");
     print("Architecture: $architecture");
-    print("Binaries: $selectedBinaries");
+    print("Binaries: ");
+    selectedBinaries.forEach((element) {
+      print(element.name + " ");
+    });
     print("Link: $link");
     print("Ip: $ip");
     print("Domain: $domain");
